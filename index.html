@@ -303,9 +303,10 @@
                     <div id="dz-label">Bild hierher ziehen oder klicken zum Auswählen</div>
                     <span>PNG, JPG oder WEBP</span>
                     <input type="file" id="fileInput" accept="image/*">
-                    <div "a" </div>
                 </div>
-            
+                <div style="font-size:13px; color:var(--muted); margin-top:10px;">
+                    Der Konverter geht nicht mehr, <a href="https://claude.ai/public/artifacts/1cf98094-f853-4317-9d87-915487bdf0aa" target="_blank" rel="noopener">hier</a> die neue Version
+                </div>
                 <img id="preview">
                 <button id="analyzeBtn" disabled>Weiter — Bild analysieren</button>
                 <div id="status1" class="statusline" style="font-size:13px; color:var(--muted); margin-top:10px; min-height:18px;"></div>
@@ -631,8 +632,6 @@ Format exakt:
 
                 const dayCols = ['C', 'D', 'E', 'F', 'G'];
                 const canonicalDays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'];
-                // Pause liegt nach Stunde 2 und nach Stunde 4 (Zeilen 6 und 9 bleiben unberührt).
-                // Dienstag hat nach Stunde 2 zusätzlich die KLS-Stunde, erst danach die Pause.
                 const fallbackRows = [3, 4, 7, 8, 10, 11];
                 const lessonRowsByDay = {
                     'Montag': [3, 4, 7, 8, 10, 11],
@@ -649,7 +648,6 @@ Format exakt:
                     const col = dayCols[cIdx];
                     const rows = lessonRowsByDay[day] || fallbackRows;
 
-                    // Zielzeilen für diesen Tag erst leeren, damit keine alten Beispielwerte stehen bleiben.
                     rows.forEach(row => {
                         const cell = ws.getCell(col + row);
                         cell.value = '';
@@ -663,9 +661,6 @@ Format exakt:
                     }
                     );
 
-                    // Erkannte Werte der Reihe nach in die verfügbaren Zeilen dieses Tages eintragen.
-                    // Perioden, die für diesen Tag nicht vorkommen (z.B. KLS an anderen Tagen als Dienstag),
-                    // werden übersprungen, ohne eine Zeile zu verbrauchen.
                     let rowIdx = 0;
                     periods.forEach(period => {
                         if (rowIdx >= rows.length)
@@ -732,4 +727,4 @@ Format exakt:
             );
         </script>
     </body>
-</html>
+                    </html>
