@@ -18,6 +18,9 @@
             --green: #4ade80;
             --green-dark: #34c073;
             --green-text: #10331e;
+            --Notenapp-blue: #008EE6;
+            --Notenapp-blue-dark: #0468AB;
+            --Notenapp-blue-text: #021B2B;
             --blue: #38bdf8;
             --blue-dark: #1fa8e0;
             --blue-text: #072a3a;
@@ -96,6 +99,9 @@
         /*Grün*/
         button[data-color="green"] { background: var(--green); color: var(--green-text); }
         button[data-color="green"]:hover:not(:disabled) { background: var(--green-dark); }
+        /*Notenapp-Blau*/
+        button[data-color="Notenapp-blue"] { background: var(--Notenapp-blue); color: var(--Notenapp-blue-text); }
+        button[data-color="Notenapp-blue"]:hover:not(:disabled) { background: var(--Notenapp-blue-dark); }
         /*Blau*/
         button[data-color="blue"] { background: var(--blue); color: var(--blue-text); }
         button[data-color="blue"]:hover:not(:disabled) { background: var(--blue-dark); }
@@ -169,13 +175,13 @@
             url: 'https://raw.githubusercontent.com/SigmaSites/Stundenplan/refs/heads/main/pdf/71.pdf',
             filename: 'timetable_-P1QCMeAoRNLaztDyK6b.pdf'
         },
-        /*{
+        {
             id: 'test',
             label: 'Test',
-            color: 'orange',
+            color: 'Notenapp-blue',
             url: 'https://raw.githubusercontent.com/SigmaSites/Flugzeug/refs/heads/main/test.html',
             filename: 'Test.html'
-        },*/
+        },
 
     ];
 
