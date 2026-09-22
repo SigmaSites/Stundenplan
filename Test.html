@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vergangene Stundenpläne</title>
+    <title>Test — Vergangene Stundenpläne</title>
     <style>
         :root {            
             --red: #ef4444;
@@ -226,11 +226,9 @@
 
     function handleDownload(file, btn) {
         clearStatus();
-        // Öffnet die GitHub-Rohdatei direkt in einem neuen Tab. Dort erscheint
-        // die leere GitHub-Rohansicht und man kann selbst per Browser (z. B.
-        // Rechtsklick „Speichern unter" oder das Download-Symbol im PDF-Viewer)
-        // wählen, wo die Datei landet.
-        window.open(file.url, '_blank');
+        // Leitet direkt auf die GitHub-Rohdatei weiter. Der Browser lädt die
+        // Datei dort selbst herunter bzw. zeigt den nativen Speichern-Dialog.
+        window.location.href = file.url;
     }
     </script>
 </body>
