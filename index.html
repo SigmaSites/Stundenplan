@@ -24,7 +24,7 @@
             --1. Hilfe: #2DD4BF; 
             --Bg: #F8FAFC; 
             --grid-line: #E2E8F0;
-            --name-inf: "IT"; 
+            --name-inf: "IT";
             --name-eng: "Englisch"; 
             --name-geo: "Geographie";
             --name-bio: "Biologie"; 
@@ -40,28 +40,25 @@
             --name-spo: "Sport"; 
             --name-mus: "Musik"; 
             --name-ers: "1. Hilfe";
-            --lehrer-inf: "Hr. Müller"; 
-            --lehrer-eng: "Fr. Smith"; 
-            --lehrer-geo: "Hr. Mayer";
-            --lehrer-bio: "Fr. Grün"; 
-            --lehrer-phy: "Hr. Einstein"; 
-            --lehrer-deu: "Fr. Wort";
-            --lehrer-ita: "Signora B."; 
-            --lehrer-che: "Hr. Bunsen"; 
-            --lehrer-rel: "Fr. Geist";
-            --lehrer-kls: "Hr. Chef"; 
-            --lehrer-ges: "Fr. Antike"; 
-            --lehrer-mat: "Hr. Pythagoras";
-            --lehrer-kun: "Fr. Picasso"; 
-            --lehrer-spo: "Hr. Fit"; 
-            --lehrer-mus: "Fr. Mozart"; 
-            --lehrer-ers: "Hr. Moral";
+            --lehrer-inf: "Frau Heinrich"; 
+            --lehrer-eng: "Frau Kramer"; 
+            --lehrer-geo: "Frau Krone";
+            --lehrer-bio: "HERR Pasurka"; 
+            --lehrer-phy: "Frau Hoffmann"; 
+            --lehrer-deu: "Frau Krone";
+            --lehrer-ita: "Herr Zohner"; 
+            --lehrer-che: "Frau Holzschuh"; 
+            --lehrer-rel: "Frau Kuhn";
+            --lehrer-kls: "Frau Kramer"; 
+            --lehrer-ges: "Frau Taraschewski"; 
+            --lehrer-mat: "Frau Kramer";
+            --lehrer-kun: "Frau Sleeper"; 
+            --lehrer-spo: "Herr Klüpfel"; 
+            --lehrer-mus: "Herr Barkowsky"; 
+            --lehrer-ers: "Frau Hinte";
         }
         body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--clr-bg); color: #1E293B; margin: 0; padding: 40px 20px; }
         .header { max-width: 1200px; margin: 0 auto 30px auto; display: flex; justify-content: space-between; align-items: flex-end; }
-        .logo-area { display: flex; align-items: center; gap: 12px; }
-        .logo-icon { background-color: #0284C7; color: white; font-weight: bold; font-size: 1.8rem; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
-        .logo-text { font-size: 2.2rem; font-weight: 800; color: #0F172A; margin: 0; }
         .tagline { font-size: 1.3rem; font-style: italic; color: #0284C7; transform: rotate(-2deg); font-family: 'Comic Sans MS', sans-serif; }
         .timetable-grid { display: grid; grid-template-columns: 90px repeat(6, 1fr); grid-template-rows: 40px repeat(85, 14px); gap: 6px 12px; max-width: 1200px; margin: 0 auto; position: relative; }
         .day-header { grid-row: 1; font-size: 1.1rem; font-weight: bold; text-align: center; align-self: center; color: #0F172A; }
@@ -98,10 +95,6 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="logo-area"><div class="logo-icon">n</div><h1 class="logo-text">Stundenplan<span>.</span></h1></div>
-        <div class="tagline">Auf Papier ganz nett. Digital aber besser!</div>
-    </div>
     <div class="timetable-grid">
         <div class="day-header" style="grid-column: 1;">Zeit</div>
         <div class="day-header mo">Mo</div><div class="day-header di">Di</div><div class="day-header mi">Mi</div>
