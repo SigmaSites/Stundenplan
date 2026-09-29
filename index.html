@@ -8,24 +8,25 @@
         :root {
             /* ============================================================
                FÄCHER – hier definieren (eine Zeile pro Fach)
-               Format:  --fach-KÜRZEL: "Anzeigename | Lehrer | Raum | Farbe | Textfarbe (optional)";
+               Format:  --fach-KÜRZEL: "Anzeigename | Lehrer | Raum | Farbe | Textfarbe (optional) | Randfarbe (optional)";
+               (Textfarbe leer lassen = automatisch, z. B.  "... | #ffffff | | #94A3B8"  für nur einen Rand)
                KÜRZEL = das Wort, das du unten im Plan eintippst (klein, ohne Leerzeichen)
                ============================================================ */
             --fach-it:         "IT | Frau Heinrich | 224 | #ffc107";
             --fach-englisch:   "Englisch | Frau Kramer | 106 | #000000";
-            --fach-geo:        "Geo | Frau Krone | 201 | #5d4037 | #fff";
+            --fach-geo:        "Geo | Frau Krone | 201 | #5d4037";
             --fach-bio:        "Bio | Herr Pasurka | 214 | #4caf50";
-            --fach-physik:     "Physik | Frau Hoffmann | 217 | #757575 | #fff";
+            --fach-physik:     "Physik | Frau Hoffmann | 217 | #757575";
             --fach-deutsch:    "Deutsch | Frau Krone | 201 | #c62828";
             --fach-itag:       "ITAG | Herr Zohner | 224 | #ffc107";
             --fach-chemie:     "Chemie | Frau Holzschuh | 211 | #607d8b";
-            --fach-religion:   "Religion | Frau Kuhn | 133 | #7b1fa2 | #fff";
+            --fach-religion:   "Religion | Frau Kuhn | 133 | #7b1fa2";
             --fach-kls:        "Klassenleiterst. | Frau Kramer | 106 | #9e9e9e";
             --fach-geschichte: "Geschichte | Frau Taraschewski | 206 | #ff4081";
-            --fach-mathe:      "Mathe | Frau Holzschuh | 228 | #1a237e | #fff";
+            --fach-mathe:      "Mathe | Frau Holzschuh | 228 | #1a237e";
             --fach-kunst:      "Kunst | Frau Sleeper | 023 | #1e88e5";
-            --fach-sport:      "Sport | Herr Klüpfel | LKT-Halle | #ff5722 | #fff";
-            --fach-musik:      "Musik | Herr Barkowsky | 001 | #ffffff";
+            --fach-sport:      "Sport | Herr Klüpfel | LKT-Halle | #ff5722";
+            --fach-musik:      "Musik | Herr Barkowsky | 001 | #ffffff | | #000000";
             --fach-erstehilfe: "1. Hilfe | Frau Hinte | 214 | #00ffda";
 
             /* ============================================================
@@ -147,7 +148,7 @@ Fr: Mathe Bio Pause Deutsch Englisch Pause Geo Chemie
                         if (n.indexOf("--fach-") !== 0) continue;
                         var v = st.getPropertyValue(n).trim().replace(/^["']|["']$/g, "");
                         var p = v.split("|").map(function (x) { return x.trim(); });
-                        out[n.slice(7).toLowerCase()] = { name: p[0], lehrer: p[1] || "", raum: p[2] || "", farbe: p[3] || "#CBD5E1", text: p[4] || "" };
+                        out[n.slice(7).toLowerCase()] = { name: p[0], lehrer: p[1] || "", raum: p[2] || "", farbe: p[3] || "#CBD5E1", text: p[4] || "", rand: p[5] || "" };
                     }
                 }
             }
@@ -238,6 +239,7 @@ Fr: Mathe Bio Pause Deutsch Englisch Pause Geo Chemie
                 var f = it.f || { name: it.label, lehrer: "", farbe: "#E5E7EB", text: "" };
                 e.style.background = f.farbe;
                 e.style.color = f.text || fg(f.farbe);
+                if (f.rand) e.style.border = "2px solid " + f.rand;
                 var top = el("card-top");
                 top.appendChild(el("subject-code", f.name, "span"));
                 if (it.raum) top.appendChild(el("room-number", it.raum, "span"));
