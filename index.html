@@ -1,122 +1,292 @@
 <!DOCTYPE html>
-<html lang="de" data-frame-refused-watch="" __gcrremoteframetoken="e8f2737ebd00de74ac87d27f30fb0242" data-theme="dark" style="color-scheme: dark;"><head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Stundenplan</title>
-<style>
-:root{--bg:#f6f7f9;--card:#fff;--tx:#1c2430;--mu:#6b7686;--bd:#dde1e8;--ac:#3b6ef5;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171c;--card:#1d222a;--tx:#e8ecf2;--mu:#98a3b3;--bd:#2f3743;--ac:#6d93ff}}
-:root[data-theme="dark"]{--bg:#14171c;--card:#1d222a;--tx:#e8ecf2;--mu:#98a3b3;--bd:#2f3743;--ac:#6d93ff}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-main{max-width:980px;margin:0 auto;padding:16px}
-header{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-h1{font-size:22px;margin:0}
-button{font:inherit;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;padding:7px 12px;cursor:pointer}
-button.p{background:var(--ac);border-color:var(--ac);color:#fff}
-.wrap{overflow-x:auto}
-table{border-collapse:separate;border-spacing:4px;width:100%;min-width:560px;table-layout:fixed}
-th{font-weight:600;padding:8px 4px;color:var(--mu)}
-th.today{color:var(--ac)}
-th.per{width:78px;font-size:12px;line-height:1.2}
-th.per input{width:100%;box-sizing:border-box;font-size:12px}
-td{height:62px;padding:0;vertical-align:middle;text-align:center}
-.c{border-radius:10px;height:100%;min-height:62px;display:flex;flex-direction:column;justify-content:center;padding:4px;box-sizing:border-box;border:1px solid var(--bd);background:var(--card)}
-.c b{font-size:14px}.c small{opacity:.85;font-size:12px}
-.c.now{outline:3px solid var(--ac)}
-.c select{width:100%}
-.panel{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-top:16px}
-.panel h2{font-size:16px;margin:0 0 8px}
-.sub{display:grid;grid-template-columns:44px 1.4fr 1fr 1fr auto;gap:6px;margin-bottom:6px;align-items:center}
-input,select{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:6px;padding:6px;min-width:0}
-input[type=color]{padding:0;height:34px;width:44px}
-.msg{color:var(--mu);font-size:13px;margin-top:8px}
-@media(max-width:560px){.sub{grid-template-columns:44px 1fr 1fr}.sub input:nth-child(4),.sub button{grid-column:span 1}}
-</style>
-</head>
-<body data-__gcrweb-annotatedpagecontent-processed="33761265912582BC33E10A59C63ECD7B">
-<main>
-<header><h1>📅 Stundenplan</h1><div id="bar"></div></header>
-<div id="app"></div>
-<div class="msg" id="msg"></div>
-</main>
-<script id="state" type="application/json">{"days":["Mo","Di","Mi","Do","Fr"],"periods":[{"s":"07:55","e":"08:40"},{"s":"08:40","e":"09:35"},{"s":"09:55","e":"10:40"},{"s":"10:45","e":"11:30"},{"s":"11:45","e":"12:30"},{"s":"12:35","e":"13:20"}],"subjects":[{"id":"m","name":"Mathe","room":"R 101","teacher":"Hr. Weber","color":"#f5b942"},{"id":"d","name":"Deutsch","room":"R 204","teacher":"Fr. Klein","color":"#ef6f6c"},{"id":"e","name":"Englisch","room":"R 112","teacher":"Fr. Roth","color":"#5aa9e6"},{"id":"s","name":"Sport","room":"Halle","teacher":"Hr. Braun","color":"#6cc38a"}],"slots":{"0-0":"m","0-1":"d","1-0":"e","1-2":"s","2-1":"m","3-0":"d","4-3":"e"}}</script>
-<script id="app-js">
-(function(){
-var S=JSON.parse(document.getElementById("state").textContent);
-var edit=false,dirty=false,art=null,canEdit=false;
-var app=document.getElementById("app"),bar=document.getElementById("bar"),msg=document.getElementById("msg");
-function el(t,p,kids){var e=document.createElement(t);for(var k in (p||{})){if(k==="text")e.textContent=p[k];else if(k==="on")for(var ev in p.on)e.addEventListener(ev,p.on[ev]);else if(k in e&&k!=="list")e[k]=p[k];else e.setAttribute(k,p[k]);}(kids||[]).forEach(function(c){e.appendChild(c)});return e}
-function sub(id){return S.subjects.filter(function(s){return s.id===id})[0]}
-function fg(hex){var n=parseInt(hex.slice(1),16),r=n>>16,g=(n>>8)&255,b=n&255;return (r*299+g*587+b*114)/1000>150?"#111":"#fff"}
-function mins(t){var a=t.split(":");return +a[0]*60+ +a[1]}
-function nowPos(){var d=new Date(),day=d.getDay()-1,m=d.getHours()*60+d.getMinutes(),p=-1;S.periods.forEach(function(x,i){if(m>=mins(x.s)&&m<=mins(x.e))p=i});return{day:day,p:p}}
-function render(){
- var np=nowPos();app.textContent="";bar.textContent="";
- if(canEdit){
-  if(!edit)bar.appendChild(el("button",{text:"✏️ Bearbeiten",on:{click:function(){edit=true;render()}}}));
-  else{bar.appendChild(el("button",{text:"Abbrechen",on:{click:function(){location.reload()}}}));bar.appendChild(document.createTextNode(" "));bar.appendChild(el("button",{className:"p",text:"💾 Speichern",on:{click:save}}));}
- }
- var t=el("table"),hr=el("tr");hr.appendChild(el("th"));
- S.days.forEach(function(d,i){hr.appendChild(el("th",{text:d,className:i===np.day?"today":""}))});t.appendChild(hr);
- S.periods.forEach(function(p,pi){
-  var r=el("tr"),th=el("th",{className:"per"});
-  if(edit){th.appendChild(el("input",{value:p.s,type:"time",on:{change:function(e){p.s=e.target.value;dirty=true}}}));th.appendChild(el("input",{value:p.e,type:"time",on:{change:function(e){p.e=e.target.value;dirty=true}}}));}
-  else{th.appendChild(el("div",{text:(pi+1)+"."}));th.appendChild(el("div",{text:p.s+"–"+p.e}));}
-  r.appendChild(th);
-  S.days.forEach(function(d,di){
-   var key=di+"-"+pi,s=sub(S.slots[key]),td=el("td"),c=el("div",{className:"c"+(di===np.day&&pi===np.p?" now":"")});
-   if(edit){
-    var sel=el("select");sel.appendChild(el("option",{value:"",text:"—"}));
-    S.subjects.forEach(function(x){sel.appendChild(el("option",{value:x.id,text:x.name,selected:x.id===S.slots[key]}))});
-    sel.addEventListener("change",function(){if(sel.value)S.slots[key]=sel.value;else delete S.slots[key];dirty=true;render()});
-    c.appendChild(sel);
-   }
-   if(s){c.style.background=s.color;c.style.color=fg(s.color);c.style.borderColor=s.color;
-    if(!edit){c.appendChild(el("b",{text:s.name}));if(s.room)c.appendChild(el("small",{text:s.room}));if(s.teacher)c.appendChild(el("small",{text:s.teacher}));}}
-   td.appendChild(c);r.appendChild(td)});
-  t.appendChild(r)});
- app.appendChild(el("div",{className:"wrap"},[t]));
- if(edit)editor();
-}
-function editor(){
- var pn=el("div",{className:"panel"});pn.appendChild(el("h2",{text:"Fächer"}));
- S.subjects.forEach(function(s){
-  function f(k,ph){return el("input",{value:s[k]||"",placeholder:ph,on:{input:function(e){s[k]=e.target.value;dirty=true},change:render}})}
-  var row=el("div",{className:"sub"});
-  row.appendChild(el("input",{type:"color",value:s.color,on:{input:function(e){s.color=e.target.value;dirty=true},change:render}}));
-  row.appendChild(f("name","Name"));row.appendChild(f("room","Raum"));row.appendChild(f("teacher","Lehrer/in"));
-  row.appendChild(el("button",{text:"🗑",title:"Löschen",on:{click:function(){
-   S.subjects=S.subjects.filter(function(x){return x!==s});
-   for(var k in S.slots)if(S.slots[k]===s.id)delete S.slots[k];dirty=true;render()}}}));
-  pn.appendChild(row)});
- pn.appendChild(el("button",{text:"+ Fach hinzufügen",on:{click:function(){
-  S.subjects.push({id:"f"+Date.now().toString(36),name:"Neues Fach",room:"",teacher:"",color:"#a78bfa"});dirty=true;render()}}}));
- var pp=el("div",{className:"panel"});pp.appendChild(el("h2",{text:"Stunden"}));
- pp.appendChild(el("button",{text:"+ Stunde",on:{click:function(){var l=S.periods[S.periods.length-1];S.periods.push({s:l?l.e:"08:00",e:l?l.e:"08:45"});dirty=true;render()}}}));
- pp.appendChild(document.createTextNode(" "));
- pp.appendChild(el("button",{text:"− Letzte Stunde",on:{click:function(){if(S.periods.length>1){var i=S.periods.length-1;S.periods.pop();for(var k in S.slots)if(+k.split("-")[1]===i)delete S.slots[k];dirty=true;render()}}}}));
- app.appendChild(pn);app.appendChild(pp);
-}
-function save(){
- if(!art)return;
- var c=document.documentElement.cloneNode(true);
- c.querySelector("#app").innerHTML="";c.querySelector("#msg").innerHTML="";c.querySelector("#bar").innerHTML="";
- c.querySelector("#state").textContent=JSON.stringify(S).replace(/</g,"\\u003c");
- msg.textContent="Speichere …";
- art.publish("<!DOCTYPE html>\n"+c.outerHTML).then(function(){msg.textContent="Gespeichert – alle Geräte sehen jetzt den neuen Plan."}).catch(function(e){
-  msg.textContent=(e&&e.code==="conflict")?"Jemand anderes hat gerade gespeichert – Seite wird neu geladen.":"Speichern nicht möglich: "+((e&&e.code)||"Fehler")});
-}
-render();
-if(window.claude&&claude.use){
- Promise.all([claude.use("artifact"),claude.use("user")]).then(function(r){
-  art=r[0];var u=r[1];canEdit=!!(art&&u&&u.canEdit&&u.canEdit());render();
- }).catch(function(){});
-}
-setInterval(function(){if(!edit)render()},60000);
-})();
-</script>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digitaler Stundenplan</title>
+    <style>
+        /* ==========================================================================
+           ZENTRALE KONFIGURATION (:root)
+           Hier kannst du Farben, Fächer und Lehrer global anpassen!
+           ========================================================================== */
+        :root {
+            /* Farben exakt nach deiner Vorlage */
+            --clr-inf: #FCD34D; /* Gelb */
+            --clr-eng: #9CA3AF; /* Grau */
+            --clr-geo: #A1887F; /* Braun */
+            --clr-bio: #86EFAC; /* Grün */
+            --clr-phy: #94A3B8; /* Schiefer */
+            --clr-deu: #F87171; /* Rot */
+            --clr-ita: #FBBF24; /* Dunkelgelb */
+            --clr-che: #E879F9; /* Pink/Lila */
+            --clr-rel: #C084FC; /* Violett */
+            --clr-kls: #CBD5E1; /* Hellgrau */
+            --clr-ges: #F472B6; /* Rosa */
+            --clr-mat: #6366F1; /* Blau-Violett */
+            --clr-kun: #60A5FA; /* Hellblau */
+            --clr-spo: #3B82F6; /* Blau */
+            --clr-mus: #E2E8F0; /* Ganz helles Grau */
+            --clr-ers: #2DD4BF; /* Türkis */
+            
+            --clr-bg: #F8FAFC;
+            --clr-grid-line: #E2E8F0;
 
+            /* Vollständige Namen der Fächer */
+            --name-inf: "Informatik";
+            --name-eng: "Englisch";
+            --name-geo: "Geographie";
+            --name-bio: "Biologie";
+            --name-phy: "Physik";
+            --name-deu: "Deutsch";
+            --name-ita: "Italienisch";
+            --name-che: "Chemie";
+            --name-rel: "Religion";
+            --name-kls: "Klassenleiterst.";
+            --name-ges: "Geschichte";
+            --name-mat: "Mathematik";
+            --name-kun: "Kunst";
+            --name-spo: "Sport";
+            --name-mus: "Musik";
+            --name-ers: "Ethik / ERS";
 
-</body></html>
+            /* Namen der Lehrer */
+            --lehrer-inf: "Hr. Müller";
+            --lehrer-eng: "Fr. Smith";
+            --lehrer-geo: "Hr. Mayer";
+            --lehrer-bio: "Fr. Grün";
+            --lehrer-phy: "Hr. Einstein";
+            --lehrer-deu: "Fr. Wort";
+            --lehrer-ita: "Signora B.";
+            --lehrer-che: "Hr. Bunsen";
+            --lehrer-rel: "Fr. Geist";
+            --lehrer-kls: "Hr. Chef";
+            --lehrer-ges: "Fr. Antike";
+            --lehrer-mat: "Hr. Pythagoras";
+            --lehrer-kun: "Fr. Picasso";
+            --lehrer-spo: "Hr. Fit";
+            --lehrer-mus: "Fr. Mozart";
+            --lehrer-ers: "Hr. Moral";
+        }
+
+        /* Allgemeines Layout */
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--clr-bg);
+            color: #1E293B;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .header {
+            max-width: 1200px;
+            margin: 0 auto 30px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            background-color: #0284C7;
+            color: white;
+            font-weight: bold;
+            font-size: 1.8rem;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .logo-text {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #0F172A;
+            margin: 0;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: #0284C7;
+            transform: rotate(-2deg);
+            font-family: 'Chalkboard SE', 'Comic Sans MS', sans-serif;
+        }
+
+        /* Das Hauptraster */
+        .timetable-grid {
+            display: grid;
+            grid-template-columns: 90px repeat(6, 1fr);
+            /* 85 Zeilen zu je 5 Minuten von 07:55 bis 15:00 Uhr */
+            grid-template-rows: 40px repeat(85, 14px);
+            gap: 6px 12px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Wochentage Kopfzeile */
+        .day-header {
+            grid-row: 1;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-align: center;
+            align-self: center;
+            color: #0F172A;
+        }
+
+        /* Zeitachse links */
+        .time-label {
+            grid-column: 1;
+            color: #94A3B8;
+            font-size: 0.9rem;
+            text-align: right;
+            padding-right: 15px;
+            font-weight: 500;
+            z-index: 10;
+        }
+
+        /* Horizontale Stundenlinien im Hintergrund */
+        .hour-line {
+            grid-column: 1 / span 7;
+            border-top: 2px dashed var(--clr-grid-line);
+            z-index: 1;
+            pointer-events: none;
+            margin-top: 6px;
+        }
+
+        /* Styling der Fach-Karten */
+        .card {
+            border-radius: 8px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            z-index: 5;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: flex-start;
+            align-items: baseline;
+            gap: 6px;
+        }
+
+        .subject-code {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .room-number {
+            font-size: 0.8rem;
+            font-weight: 600;
+            opacity: 0.8;
+        }
+
+        .subject-details {
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-top: auto;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Die kleinen exakten Zeiten in den Ecken */
+        .time-badge {
+            position: absolute;
+            font-size: 0.68rem;
+            font-weight: 600;
+            opacity: 0.75;
+        }
+        .time-badge.start { top: 4px; right: 6px; }
+        .time-badge.end { bottom: 4px; right: 6px; }
+
+        /* Pausen & Freistunden */
+        .break-zone {
+            color: #94A3B8;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: 1px solid var(--clr-grid-line);
+            border-bottom: 1px solid var(--clr-grid-line);
+            z-index: 2;
+        }
+
+        .free-zone {
+            color: #94A3B8;
+            font-size: 1rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        /* Spaltenzuordnung */
+        .mo { grid-column: 2; } .di { grid-column: 3; } .mi { grid-column: 4; }
+        .do { grid-column: 5; } .fr { grid-column: 6; } .sa { grid-column: 7; }
+
+        /* Dynamische CSS-Injektion über root-Variablen */
+        .inf { background-color: var(--clr-inf); }
+        .inf .subject-code::after { content: "INF"; }
+        .inf .subject-details::after { content: var(--name-inf) " | " var(--lehrer-inf); }
+
+        .eng { background-color: var(--clr-eng); color: #1F2937; }
+        .eng .subject-code::after { content: "ENG"; }
+        .eng .subject-details::after { content: var(--name-eng) " | " var(--lehrer-eng); }
+
+        .geo { background-color: var(--clr-geo); color: #fff; }
+        .geo .subject-code::after { content: "GEO"; }
+        .geo .subject-details::after { content: var(--name-geo) " | " var(--lehrer-geo); }
+
+        .bio { background-color: var(--clr-bio); }
+        .bio .subject-code::after { content: "BIO"; }
+        .bio .subject-details::after { content: var(--name-bio) " | " var(--lehrer-bio); }
+
+        .phy { background-color: var(--clr-phy); color: #fff; }
+        .phy .subject-code::after { content: "PHY"; }
+        .phy .subject-details::after { content: var(--name-phy) " | " var(--lehrer-phy); }
+
+        .deu { background-color: var(--clr-deu); }
+        .deu .subject-code::after { content: "DEU"; }
+        .deu .subject-details::after { content: var(--name-deu) " | " var(--lehrer-deu); }
+
+        .ita { background-color: var(--clr-ita); }
+        .ita .subject-code::after { content: "ITA"; }
+        .ita .subject-details::after { content: var(--name-ita) " | " var(--lehrer-ita); }
+
+        .che { background-color: var(--clr-che); }
+        .che .subject-code::after { content: "CHE"; }
+        .che .subject-details::after { content: var(--name-che) " | " var(--lehrer-che); }
+
+        .rel { background-color: var(--clr-rel); color: #fff; }
+        .rel .subject-code::after { content: "REL"; }
+        .rel .subject-details::after { content: var(--name-rel) " | " var(--lehrer-rel); }
+
+        .kls { background-color: var(--clr-kls); }
+        .kls .subject-code::after { content: "KLS"; }
+        .kls .subject-details::after { content: var(--name-kls) " | " var(--lehrer-kls); }
+
+        .ges { background-color: var(--clr-ges); }
+        .ges .subject-code::after { content: "GES"; }
+        .ges .subject-details::after { content: var(--name-ges) " | " var(--lehrer-ges); }
+
+        .mat { background-color: var(--clr-mat); color: #fff; }
+        .mat .subject-code::after { content: "MAT"; }
+        .mat .subject-details::after { content: var(--name-mat) " | " var(--lehrer-mat); }
+
+        .kun { background-color: var(--clr-kun); }
+        .kun .subject-code::after { content: "KUN"; }
+        .kun .subject-details::after { content: var(--name-kun) " | " var(--lehrer-kun); }
