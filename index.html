@@ -6,96 +6,37 @@
     <title>Digitaler Stundenplan</title>
     <style>
         :root {
-            --IT: #FCD34D;
-            --name-IT: "IT";
-            --lehrer-IT: "Frau Heinrich";
-            --room-IT: "224";
-            
-            --Englisch: ##000000F;
-            --name-eng: "Englisch";
-            --lehrer-eng: "Frau Kramer";
-            --room-eng: "106";
-            
-            --Geo: #A1887F;
-            --name-geo: "Geo";
-            --lehrer-geo: "Frau Krone";
-            --room-geo: "201";
-            
-            --Bio: #86EFAC;
-            --name-bio: "Bio";
-            --lehrer-bio: "Herr Pasurka";
-            --room-bio: "214";
-            
-            --Physik: #94A3B8;
-            --name-phy: "Physik";
-            --lehrer-phy: "Frau Hoffmann";
-            
-            --Deutsch: #F87171;
-            --name-deu: "Deutsch";
-            --lehrer-deu: "Frau Krone";
-            --room-deu: "201";
-            
-            --ITAG: #FBBF24;
-            --name-itag: "ITAG";
-            --lehrer-itag: "Herr Zohner";
-            --room-itag: "224";
-            
-            --Chemie: #E879F9;
-            --name-che: "Chemie";
-            --lehrer-che: "Frau Holzschuh";
-            --room-che: "211";
-            
-            --Religion: #C084FC;
-            --name-rel: "Religion";
-            --lehrer-rel: "Frau Kuhn";
-            --room-rel: "133";
-            
-            --Kls: #CBD5E1;
-            --name-kls: "Klassenleiterst.";
-            --lehrer-kls: "Frau Kramer";
-            --room-kls: "106";
-            
-            --Geschichte: #F472B6;
-            --name-ges: "Geschichte";
-            --lehrer-ges: "Frau Taraschewski";
-            --room-ges: "206";
-            
-            --Mathe: #6366F1;
-            --name-mat: "Mathe";
-            --lehrer-mat: "Frau Holzschuh";
-            --room-mat: "228";
-            
-            --Kunst: #60A5FA;
-            --name-kun: "Kunst";
-            --lehrer-kun: "Frau Sleeper";
-            --room-kun: "023";
-            
-            --Sport: #3B82F6;
-            --name-spo: "Sport";
-            --lehrer-spo: "Herr Klüpfel";
-            --room-spo: "LKT-Halle";
-            
-            --Musik: #ffffff;
-            --name-mus: "Musik";
-            --lehrer-mus: "Herr Barkowsky";
-            --room-mus: "001";
-            
-            --Erste-Hilfe: #2DD4BF;
-            --name-ers: "1. Hilfe";
-            --lehrer-ers: "Frau Hinte";
-            --room-ers: "214";
-            
-            --bg: #F8FAFC; 
-            --grid-line: #E2E8F0;   
+            /* ============================================================
+               FÄCHER – hier definieren (eine Zeile pro Fach)
+               Format:  --fach-KÜRZEL: "Anzeigename | Lehrer | Raum | Farbe | Textfarbe (optional)";
+               KÜRZEL = das Wort, das du unten im Plan eintippst (klein, ohne Leerzeichen)
+               ============================================================ */
+            --fach-it:         "IT | Frau Heinrich | 130 | #FCD34D";
+            --fach-englisch:   "Englisch | Frau Kramer | 106 | #FDBA74";
+            --fach-geo:        "Geo | Frau Krone | 201 | #A1887F | #fff";
+            --fach-bio:        "Bio | Herr Pasurka | 214 | #86EFAC";
+            --fach-physik:     "Physik | Frau Hoffmann | 217 | #94A3B8 | #fff";
+            --fach-deutsch:    "Deutsch | Frau Krone | 201 | #F87171";
+            --fach-itag:       "ITAG | Herr Zohner | 224 | #FBBF24";
+            --fach-chemie:     "Chemie | Frau Holzschuh | 211 | #E879F9";
+            --fach-religion:   "Religion | Frau Kuhn | 133 | #C084FC | #fff";
+            --fach-kls:        "Klassenleiterst. | Frau Kramer | 106 | #CBD5E1";
+            --fach-geschichte: "Geschichte | Frau Taraschewski | 206 | #F472B6";
+            --fach-mathe:      "Mathe | Frau Holzschuh | 228 | #6366F1 | #fff";
+            --fach-kunst:      "Kunst | Frau Sleeper | 023 | #60A5FA";
+            --fach-sport:      "Sport | Herr Klüpfel | LKT-Halle | #3B82F6 | #fff";
+            --fach-musik:      "Musik | Herr Barkowsky | 001 | #ffffff";
+            --fach-erstehilfe: "1. Hilfe | Frau Hinte | 214 | #2DD4BF";
+
+            --bg: #F8FAFC;
+            --grid-line: #E2E8F0;
         }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--Bg); color: #1E293B; margin: 0; padding: 40px 20px; }
-        .header { max-width: 1200px; margin: 0 auto 30px auto; display: flex; justify-content: space-between; align-items: flex-end; }
-        .tagline { font-size: 1.3rem; font-style: italic; color: #0284C7; transform: rotate(-2deg); font-family: 'Comic Sans MS', sans-serif; }
-        .timetable-grid { display: grid; grid-template-columns: 90px repeat(6, 1fr); grid-template-rows: 40px repeat(85, 14px); gap: 6px 12px; max-width: 1200px; margin: 0 auto; position: relative; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); color: #1E293B; margin: 0; padding: 40px 20px; }
+        .timetable-grid { display: grid; gap: 6px 12px; max-width: 1200px; margin: 0 auto; position: relative; }
         .day-header { grid-row: 1; font-size: 1.1rem; font-weight: bold; text-align: center; align-self: center; color: #0F172A; }
         .time-label { grid-column: 1; color: #94A3B8; font-size: 0.9rem; text-align: right; padding-right: 15px; font-weight: 500; z-index: 10; }
-        .hour-line { grid-column: 1 / span 7; border-top: 2px dashed var(--grid-line); z-index: 1; pointer-events: none; margin-top: 6px; }
-        .card { border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.02); z-index: 5; }
+        .hour-line { grid-column: 1 / -1; border-top: 2px dashed var(--grid-line); z-index: 1; pointer-events: none; margin-top: 6px; }
+        .card { border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.02); z-index: 5; color: #1E293B; overflow: hidden; }
         .card-top { display: flex; justify-content: flex-start; align-items: baseline; gap: 6px; }
         .subject-code { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.5px; }
         .room-number { font-size: 0.8rem; font-weight: 600; opacity: 0.8; }
@@ -105,191 +46,168 @@
         .time-badge.end { bottom: 4px; right: 6px; }
         .break-zone { color: #94A3B8; font-size: 0.75rem; font-weight: 500; display: flex; align-items: center; justify-content: center; border-top: 1px solid var(--grid-line); border-bottom: 1px solid var(--grid-line); }
         .free-zone { color: #94A3B8; font-size: 1rem; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 2; }
-        .mo { grid-column: 2; } .di { grid-column: 3; } .mi { grid-column: 4; } .do { grid-column: 5; } .fr { grid-column: 6; } .sa { grid-column: 7; }
-        
-        .it { background-color: var(--IT); } .it .subject-code::after { content: var(--name-IT); } .it .subject-details::after { content: var(--lehrer-IT); }
-        
-        .eng { background-color: var(--Englisch); color: #1F2937; } .eng .subject-code::after { content: var(--name-eng); } .eng .subject-details::after { content: var(--lehrer-eng); }
-        
-        .geo { background-color: var(--Geo); color: #fff; } .geo .subject-code::after { content: var(--name-geo); } .geo .subject-details::after { content: var(--lehrer-geo); }
-        
-        .bio { background-color: var(--Bio); } .bio .subject-code::after { content: var(--name-Bio); } .bio .subject-details::after { content: var(--lehrer-bio); }
-        
-        .phy { background-color: var(--Physik); color: #fff; } .phy .subject-code::after { content: var(--name-phy); } .phy .subject-details::after { content: var(--lehrer-phy); }
-        
-        .deu { background-color: var(--Deutsch); } .deu .subject-code::after { content: var(--name-deu); } .deu .subject-details::after { content: var(--lehrer-deu); }
-        
-        .itag { background-color: var(--ITAG); } .itag .subject-code::after { content: var(--name-itag); } .itag .subject-details::after { content: var(--lehrer-itag); }
-        
-        .che { background-color: var(--Chemie); } .che .subject-code::after { content: var(--name-che); } .che .subject-details::after { content: var(--lehrer-che); }
-        
-        .rel { background-color: var(--Religion); color: #fff; } .rel .subject-code::after { content: var(--name-rel); } .rel .subject-details::after { content: var(--lehrer-rel); }
-        
-        .kls { background-color: var(--Kls); } .kls .subject-code::after { content: var(--name-kls); } .kls .subject-details::after { content: var(--lehrer-kls); }
-        
-        .ges { background-color: var(--Geschichte); } .ges .subject-code::after { content: var(--name-ges); } .ges .subject-details::after { content: var(--lehrer-ges); }
-        
-        .mat { background-color: var(--Mathe); color: #fff; } .mat .subject-code::after { content: var(--name-mat); } .mat .subject-details::after { content: var(--lehrer-mat); }
-        
-        .kun { background-color: var(--Kunst); } .kun .subject-code::after { content: var(--name-kun); } .kun .subject-details::after { content: var(--lehrer-kun); }
-        
-        .spo { background-color: var(--Sport); color: #fff; } .spo .subject-code::after { content: var(--name-spo); } .spo .subject-details::after { content: var(--lehrer-spo); }
-        
-        .mus { background-color: var(--Musik); } .mus .subject-code::after { content: var(--name-mus); } .mus .subject-details::after { content: var(--lehrer-mus); }
-        
-        .ers { background-color: var(--Erste-Hilfe); } .ers .subject-code::after { content: var(--name-ers); } .ers .subject-details::after { content: var(--lehrer-ers); }
+        .fehler { max-width: 1200px; margin: 0 auto 20px; padding: 10px 14px; border-radius: 8px; background: #FEE2E2; color: #991B1B; font-size: 0.9rem; }
+        .fehler:empty { display: none; }
     </style>
 </head>
 <body>
-    <div class="timetable-grid">
-        <div class="day-header" style="grid-column: 1;">Zeit</div>
-        <div class="day-header mo">Mo</div><div class="day-header di">Di</div><div class="day-header mi">Mi</div>
-        <div class="day-header do">Do</div><div class="day-header fr">Fr</div>
+    <div class="fehler" id="fehler"></div>
+    <div class="timetable-grid" id="grid"></div>
 
-        <div class="time-label" style="grid-row: 3;">8:00 Uhr</div><div class="time-label" style="grid-row: 15;">9:00 Uhr</div>
-        <div class="time-label" style="grid-row: 27;">10:00 Uhr</div><div class="time-label" style="grid-row: 39;">11:00 Uhr</div>
-        <div class="time-label" style="grid-row: 51;">12:00 Uhr</div><div class="time-label" style="grid-row: 63;">13:00 Uhr</div>
-        <div class="time-label" style="grid-row: 75;">14:00 Uhr</div><div class="time-label" style="grid-row: 87;">15:00 Uhr</div>
+    <!-- ================================================================
+         STUNDENPLAN – hier eintippen (eine Zeile pro Tag)
+         Einfach die Fächer nacheinander schreiben:
 
-        <div class="hour-line" style="grid-row: 3;"></div><div class="hour-line" style="grid-row: 15;"></div>
-        <div class="hour-line" style="grid-row: 27;"></div><div class="hour-line" style="grid-row: 39;"></div>
-        <div class="hour-line" style="grid-row: 51;"></div><div class="hour-line" style="grid-row: 63;"></div>
-        <div class="hour-line" style="grid-row: 75;"></div><div class="hour-line" style="grid-row: 87;"></div>  
-        <!-- MONTAG -->
-        <div class="card mo it" style="grid-row: 2 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">130</span></div>
-            <div class="subject-details"></div><span class="time-badge start">7:55</span><span class="time-badge end">8:40</span>
-        </div>
-        <div class="card mo eng" style="grid-row: 11 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">106</span></div>
-            <div class="subject-details"></div><span class="time-badge start">8:40</span><span class="time-badge end">9:25</span>
-        </div>
-        <div class="break-zone mo" style="grid-row: 20 / span 4;">20 min Pause</div>
-        <div class="card mo geo" style="grid-row: 24 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">201</span></div>
-            <div class="subject-details"></div><span class="time-badge start">9:45</span><span class="time-badge end">10:30</span>
-        </div>
-        <div class="card mo bio" style="grid-row: 33 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">214</span></div>
-            <div class="subject-details"></div><span class="time-badge start">10:30</span><span class="time-badge end">11:15</span>
-        </div>
-        <div class="break-zone mo" style="grid-row: 42 / span 3;">15 min Pause</div>
-        <div class="card mo phy" style="grid-row: 45 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">217</span></div>
-            <div class="subject-details"></div><span class="time-badge start">11:30</span><span class="time-badge end">12:15</span>
-        </div>
-        <div class="card mo deu" style="grid-row: 54 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">201</span></div>
-            <div class="subject-details"></div><span class="time-badge start">12:15</span><span class="time-badge end">13:00</span>
-        </div>
-        <div class="free-zone mo" style="grid-row: 63 / span 6;">Freistunde</div>
-        <div class="card mo itag" style="grid-row: 69 / span 18;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">224</span></div>
-            <div class="subject-details"></div><span class="time-badge start">13:30</span><span class="time-badge end">15:00</span>
-        </div>
+           Mathe Deutsch Pause Sport Sport Pause ...
 
-        <!-- DIENSTAG -->
-        <div class="card di che" style="grid-row: 2 / span 8;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">211</span></div>
-            <div class="subject-details"></div><span class="time-badge start">7:55</span><span class="time-badge end">8:35</span>
-        </div>
-        <div class="card di rel" style="grid-row: 10 / span 8;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">133</span></div>
-            <div class="subject-details"></div><span class="time-badge start">8:35</span><span class="time-badge end">9:15</span>
-        </div>
-        <div class="card di kls" style="grid-row: 18 / span 6;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">106</span></div>
-            <div class="subject-details"></div><span class="time-badge start">9:15</span><span class="time-badge end">9:45</span>
-        </div>
-        <div class="break-zone di" style="grid-row: 24 / span 4;">20 min Pause</div>
-        <div class="card di ges" style="grid-row: 28 / span 8;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">206</span></div>
-            <div class="subject-details"></div><span class="time-badge start">10:05</span><span class="time-badge end">10:45</span>
-        </div>
-        <div class="card di phy" style="grid-row: 36 / span 8;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">215</span></div>
-            <div class="subject-details"></div><span class="time-badge start">10:45</span><span class="time-badge end">11:25</span>
-        </div>
-        <div class="break-zone di" style="grid-row: 44 / span 3;">15 min Pause</div>
-        <div class="card di mat" style="grid-row: 47 / span 16;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">228</span></div>
-            <div class="subject-details"></div><span class="time-badge start">11:40</span><span class="time-badge end">13:00</span>
-        </div>
-        <!-- MITTWOCH -->
-        <div class="card mi eng" style="grid-row: 2 / span 18;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">106</span></div>
-            <div class="subject-details"></div><span class="time-badge start">7:55</span><span class="time-badge end">9:25</span>
-        </div>
-        <div class="break-zone mi" style="grid-row: 20 / span 4;">20 min Pause</div>
-        <div class="card mi mat" style="grid-row: 24 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">228</span></div>
-            <div class="subject-details"></div><span class="time-badge start">9:45</span><span class="time-badge end">10:30</span>
-        </div>
-        <div class="card mi kun" style="grid-row: 33 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">023</span></div>
-            <div class="subject-details"></div><span class="time-badge start">10:30</span><span class="time-badge end">11:15</span>
-        </div>
-        <div class="break-zone mi" style="grid-row: 42 / span 3;">15 min Pause</div>
-        <div class="card mi ges" style="grid-row: 45 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">206</span></div>
-            <div class="subject-details"></div><span class="time-badge start">11:30</span><span class="time-badge end">12:15</span>
-        </div>
-        <div class="card mi rel" style="grid-row: 54 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">133</span></div>
-            <div class="subject-details"></div><span class="time-badge start">12:15</span><span class="time-badge end">13:00</span>
-        </div>
-                <!-- DONNERSTAG -->
-        <div class="card do spo" style="grid-row: 2 / span 18;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">LKT Halle</span></div>
-            <div class="subject-details"></div><span class="time-badge start">7:55</span><span class="time-badge end">9:25</span>
-        </div>
-        <div class="break-zone do" style="grid-row: 20 / span 4;">20 min Pause</div>
-        <div class="card do it" style="grid-row: 24 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">130</span></div>
-            <div class="subject-details"></div><span class="time-badge start">9:45</span><span class="time-badge end">10:30</span>
-        </div>
-        <div class="card do mus" style="grid-row: 33 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">001</span></div>
-            <div class="subject-details"></div><span class="time-badge start">10:30</span><span class="time-badge end">11:15</span>
-        </div>
-        <div class="break-zone do" style="grid-row: 42 / span 3;">15 min Pause</div>
-        <div class="card do deu" style="grid-row: 45 / span 18;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">201</span></div>
-            <div class="subject-details"></div><span class="time-badge start">11:30</span><span class="time-badge end">13:00</span>
-        </div>
-        <div class="free-zone do" style="grid-row: 63 / span 6;">Freistunde</div>
-        <div class="card do ers" style="grid-row: 69 / span 18;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">214</span></div>
-            <div class="subject-details"></div><span class="time-badge start">13:30</span><span class="time-badge end">15:00</span>
-        </div>
+         Regeln:
+           • Ein Fach = 45 Min. Zwei gleiche hintereinander = eine Doppelstunde.
+           • Pause  = 20 Min. (die erste am Tag), danach 15 Min.
+           • Frei   = Freistunde (30 Min.)
+           • Andere Länge:    Chemie:40   Pause:10   Frei:60
+           • Anderer Raum:    Physik/215   (Raum nur an diesem Tag)
+           • Beides:          Physik/215:40
+           • Start ist 7:55 Uhr. Zeilen mit # davor werden ignoriert.
+         ================================================================ -->
+    <script type="text/plain" id="plan">
+Mo: IT Englisch Pause Geo Bio Pause Physik Deutsch Frei ITAG ITAG
+Di: Chemie:40 Religion:40 Kls:30 Pause Geschichte:40 Physik/215:40 Pause Mathe:40 Mathe:40
+Mi: Englisch Englisch Pause Mathe Kunst Pause Geschichte Religion
+Do: Sport Sport Pause IT Musik Pause Deutsch Deutsch Frei Erstehilfe Erstehilfe
+Fr: Mathe Bio Pause Deutsch Englisch Pause Geo Chemie
+    </script>
 
-        <!-- FREITAG -->
-        <div class="card fr mat" style="grid-row: 2 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">228</span></div>
-            <div class="subject-details"></div><span class="time-badge start">7:55</span><span class="time-badge end">8:40</span>
-        </div>
-        <div class="card fr bio" style="grid-row: 11 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">214</span></div>
-            <div class="subject-details"></div><span class="time-badge start">8:40</span><span class="time-badge end">9:25</span>
-        </div>
-        <div class="break-zone fr" style="grid-row: 20 / span 4;">20 min Pause</div>
-        <div class="card fr deu" style="grid-row: 24 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">201</span></div>
-            <div class="subject-details"></div><span class="time-badge start">9:45</span><span class="time-badge end">10:30</span>
-        </div>
-        <div class="card fr eng" style="grid-row: 33 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">106</span></div>
-            <div class="subject-details"></div><span class="time-badge start">10:30</span><span class="time-badge end">11:15</span>
-        </div>
-        <div class="break-zone fr" style="grid-row: 42 / span 3;">15 min Pause</div>
-        <div class="card fr geo" style="grid-row: 45 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">201</span></div>
-            <div class="subject-details"></div><span class="time-badge start">11:30</span><span class="time-badge end">12:15</span>
-        </div>
-        <div class="card fr che" style="grid-row: 54 / span 9;">
-            <div class="card-top"><span class="subject-code"></span><span class="room-number">211</span></div>
-            <div class="subject-details"></div><span class="time-badge start">12:15</span><span class="time-badge end">13:00</span>
-        </div>
-    </div>
+    <script>
+    /* ---------- ab hier nichts ändern nötig ---------- */
+    (function () {
+        var START = 7 * 60 + 55;                       // 7:55 Uhr
+        var TAGE = ["mo", "di", "mi", "do", "fr", "sa"];
+        var NAMEN = { mo: "Mo", di: "Di", mi: "Mi", "do": "Do", fr: "Fr", sa: "Sa" };
+        var fehler = [];
+
+        function fmt(m) { return Math.floor(m / 60) + ":" + String(m % 60).padStart(2, "0"); }
+        function fg(hex) {
+            var n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+            return (r * 299 + g * 587 + b * 114) / 1000 > 150 ? "#1E293B" : "#fff";
+        }
+        function el(cls, text, tag) {
+            var e = document.createElement(tag || "div");
+            if (cls) e.className = cls;
+            if (text != null) e.textContent = text;
+            return e;
+        }
+
+        /* Fächer aus :root lesen */
+        function leseFaecher() {
+            var out = {};
+            for (var s = 0; s < document.styleSheets.length; s++) {
+                var rules; try { rules = document.styleSheets[s].cssRules; } catch (e) { continue; }
+                for (var i = 0; i < rules.length; i++) {
+                    if (rules[i].selectorText !== ":root") continue;
+                    var st = rules[i].style;
+                    for (var j = 0; j < st.length; j++) {
+                        var n = st[j];
+                        if (n.indexOf("--fach-") !== 0) continue;
+                        var v = st.getPropertyValue(n).trim().replace(/^["']|["']$/g, "");
+                        var p = v.split("|").map(function (x) { return x.trim(); });
+                        out[n.slice(7).toLowerCase()] = { name: p[0], lehrer: p[1] || "", raum: p[2] || "", farbe: p[3] || "#CBD5E1", text: p[4] || "" };
+                    }
+                }
+            }
+            return out;
+        }
+        var faecher = leseFaecher();
+
+        /* Plan lesen */
+        var plan = {};
+        document.getElementById("plan").textContent.split("\n").forEach(function (z) {
+            z = z.trim();
+            if (!z || z[0] === "#" || z.slice(0, 2) === "//") return;
+            var i = z.indexOf(":");
+            if (i < 0) return;
+            var tag = z.slice(0, i).trim().toLowerCase().slice(0, 2);
+            if (TAGE.indexOf(tag) < 0) { fehler.push("Unbekannter Tag: " + z.slice(0, i)); return; }
+            plan[tag] = z.slice(i + 1).trim().split(/\s+/).filter(Boolean);
+        });
+        var tage = TAGE.filter(function (t) { return plan[t]; });
+        if (!tage.length) { document.getElementById("fehler").textContent = "Kein Plan gefunden – bitte Zeilen wie „Mo: Mathe Deutsch Pause“ eintragen."; return; }
+
+        /* Zeiten berechnen */
+        var items = [], maxEnd = 13 * 60;
+        tage.forEach(function (t, ci) {
+            var time = START, pausen = 0, last = null;
+            plan[t].forEach(function (tok) {
+                var teile = tok.split(":");
+                var haupt = teile[0].split("/");
+                var key0 = haupt[0], key = key0.toLowerCase(), raumOv = haupt[1] || "";
+                var dur = parseInt(teile[1], 10) || 0;
+
+                if (key === "pause") {
+                    dur = dur || (pausen++ === 0 ? 20 : 15);
+                    items.push({ ci: ci, kind: "pause", start: time, dur: dur });
+                    time += dur; last = null; return;
+                }
+                if (key === "frei") {
+                    dur = dur || 30;
+                    items.push({ ci: ci, kind: "frei", start: time, dur: dur });
+                    time += dur; last = null; return;
+                }
+                dur = dur || 45;
+                var f = faecher[key];
+                if (!f) fehler.push("Fach „" + key0 + "“ (" + NAMEN[t] + ") ist oben in :root nicht definiert (--fach-" + key + ").");
+                var raum = raumOv || (f ? f.raum : "");
+                if (last && last.key === key && last.raum === raum) {
+                    last.dur += dur;
+                } else {
+                    last = { ci: ci, kind: "fach", key: key, f: f, label: key0, raum: raum, start: time, dur: dur };
+                    items.push(last);
+                }
+                time += dur;
+            });
+            maxEnd = Math.max(maxEnd, time);
+        });
+
+        /* Raster aufbauen */
+        var grid = document.getElementById("grid");
+        var endH = Math.ceil(maxEnd / 60);
+        var rows = Math.round((endH * 60 - START) / 5) + 1;
+        grid.style.gridTemplateColumns = "90px repeat(" + tage.length + ", 1fr)";
+        grid.style.gridTemplateRows = "40px repeat(" + rows + ", 14px)";
+
+        var zeit = el("day-header", "Zeit"); zeit.style.gridColumn = 1; grid.appendChild(zeit);
+        tage.forEach(function (t, ci) {
+            var h = el("day-header", NAMEN[t]); h.style.gridColumn = ci + 2; grid.appendChild(h);
+        });
+        for (var h = 8; h <= endH; h++) {
+            var row = 2 + Math.round((h * 60 - START) / 5);
+            var l = el("time-label", h + ":00 Uhr"); l.style.gridRow = row; grid.appendChild(l);
+            var ln = el("hour-line"); ln.style.gridRow = row; grid.appendChild(ln);
+        }
+
+        items.forEach(function (it) {
+            var e, row = 2 + Math.round((it.start - START) / 5), span = Math.max(1, Math.round(it.dur / 5));
+            if (it.kind === "pause") e = el("break-zone", it.dur + " min Pause");
+            else if (it.kind === "frei") e = el("free-zone", "Freistunde");
+            else {
+                e = el("card");
+                var f = it.f || { name: it.label, lehrer: "", farbe: "#E5E7EB", text: "" };
+                e.style.background = f.farbe;
+                e.style.color = f.text || fg(f.farbe);
+                var top = el("card-top");
+                top.appendChild(el("subject-code", f.name, "span"));
+                if (it.raum) top.appendChild(el("room-number", it.raum, "span"));
+                e.appendChild(top);
+                e.appendChild(el("subject-details", f.lehrer));
+                e.appendChild(el("time-badge start", fmt(it.start), "span"));
+                e.appendChild(el("time-badge end", fmt(it.start + it.dur), "span"));
+            }
+            e.style.gridColumn = it.ci + 2;
+            e.style.gridRow = row + " / span " + span;
+            grid.appendChild(e);
+        });
+
+        document.getElementById("fehler").textContent = fehler.join(" ");
+    })();
+    </script>
 </body>
 </html>
