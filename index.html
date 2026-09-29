@@ -6,60 +6,87 @@
     <title>Digitaler Stundenplan</title>
     <style>
         :root {
-            --IT: #FCD34D; 
-            --name-inf: "IT";
-            --lehrer-inf: "Frau Heinrich"; 
-            --Englisch: #9CA3AF; --name-eng: "Englisch"; --lehrer-eng: "Frau Kramer"; 
-            --Geo: #A1887F;--name-geo: "Geo";--lehrer-geo: "Frau Krone";
-            --Bio: #86EFAC; 
-            --Physik: #94A3B8; 
+            --IT: #FCD34D;
+            --name-IT: "IT";
+            --lehrer-IT: "Frau Heinrich";
+            --room-IT: "224";
+            
+            --Englisch: #9CA3AF;
+            --name-eng: "Englisch";
+            --lehrer-eng: "Frau Kramer";
+            --room-eng: "106";
+            
+            --Geo: #A1887F;
+            --name-geo: "Geo";
+            --lehrer-geo: "Frau Krone";
+            --room-geo: "201";
+            
+            --Bio: #86EFAC;
+            --name-bio: "Bio";
+            --lehrer-bio: "Herr Pasurka";
+            --room-bio: "214";
+            
+            --Physik: #94A3B8;
+            --name-phy: "Physik";
+            --lehrer-phy: "Frau Hoffmann";
+            
             --Deutsch: #F87171;
-            --ITAG: #FBBF24; 
-            --Chemie: #E879F9; 
+            --name-deu: "Deutsch";
+            --lehrer-deu: "Frau Krone";
+            --room-deu: "201";
+            
+            --ITAG: #FBBF24;
+            --name-itag: "ITAG";
+            --lehrer-itag: "Herr Zohner";
+            --room-itag: "224";
+            
+            --Chemie: #E879F9;
+            --name-che: "Chemie";
+            --lehrer-che: "Frau Holzschuh";
+            --room-che: "211";
+            
             --Religion: #C084FC;
-            --Kls: #CBD5E1; 
-            --Geschichte: #F472B6; 
+            --name-rel: "Religion";
+            --lehrer-rel: "Frau Kuhn";
+            --room-rel: "133";
+            
+            --Kls: #CBD5E1;
+            --name-kls: "Klassenleiterst.";
+            --lehrer-kls: "Frau Kramer";
+            --room-kls: "106";
+            
+            --Geschichte: #F472B6;
+            --name-ges: "Geschichte";
+            --lehrer-ges: "Frau Taraschewski";
+            --room-ges: "206";
+            
             --Mathe: #6366F1;
-            --Kunst: #60A5FA; 
-            --Sport: #3B82F6; 
+            --name-mat: "Mathe";
+            --lehrer-mat: "Frau Holzschuh";
+            --room-mat: "228";
+            
+            --Kunst: #60A5FA;
+            --name-kun: "Kunst";
+            --lehrer-kun: "Frau Sleeper";
+            --room-kun: "023";
+            
+            --Sport: #3B82F6;
+            --name-spo: "Sport";
+            --lehrer-spo: "Herr Klüpfel";
+            --room-spo: "LKT-Halle";
+            
             --Musik: #E2E8F0;
+            --name-mus: "Musik";
+            --lehrer-mus: "Herr Barkowsky";
+            --room-mus: "001";
+            
             --Erste-Hilfe: #2DD4BF;
-
+            --name-ers: "1. Hilfe";
+            --lehrer-ers: "Frau Hinte";
+            --room-ers: "214";
             
             --bg: #F8FAFC; 
-            --grid-line: #E2E8F0;
-            
-            
-            
-            --name-bio: "Bio"; 
-            --name-phy: "Physik"; 
-            --name-deu: "Deutsch";
-            --name-ita: "ITAG"; 
-            --name-che: "Chemie"; 
-            --name-rel: "Religion";
-            --name-kls: "Klassenleiterst."; 
-            --name-ges: "Geschichte";
-            --name-mat: "Mathe";
-            --name-kun: "Kunst"; 
-            --name-spo: "Sport"; 
-            --name-mus: "Musik"; 
-            --name-ers: "1. Hilfe";
-            
-            
-            
-            --lehrer-bio: "HERR Pasurka"; 
-            --lehrer-phy: "Frau Hoffmann"; 
-            --lehrer-deu: "Frau Krone";
-            --lehrer-ita: "Herr Zohner"; 
-            --lehrer-che: "Frau Holzschuh"; 
-            --lehrer-rel: "Frau Kuhn";
-            --lehrer-kls: "Frau Kramer"; 
-            --lehrer-ges: "Frau Taraschewski"; 
-            --lehrer-mat: "Frau Holzschuh";
-            --lehrer-kun: "Frau Sleeper"; 
-            --lehrer-spo: "Herr Klüpfel"; 
-            --lehrer-mus: "Herr Barkowsky"; 
-            --lehrer-ers: "Frau Hinte";
+            --grid-line: #E2E8F0;   
         }
         body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--Bg); color: #1E293B; margin: 0; padding: 40px 20px; }
         .header { max-width: 1200px; margin: 0 auto 30px auto; display: flex; justify-content: space-between; align-items: flex-end; }
@@ -80,7 +107,7 @@
         .free-zone { color: #94A3B8; font-size: 1rem; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 2; }
         .mo { grid-column: 2; } .di { grid-column: 3; } .mi { grid-column: 4; } .do { grid-column: 5; } .fr { grid-column: 6; } .sa { grid-column: 7; }
         
-        .inf { background-color: var(--IT); } .inf .subject-code::after { content: var(--name-inf); } .inf .subject-details::after { content: var(--lehrer-inf); }
+        .it { background-color: var(--IT); } .it .subject-code::after { content: var(--name-IT); } .it .subject-details::after { content: var(--lehrer-IT); }
         
         .eng { background-color: var(--Englisch); color: #1F2937; } .eng .subject-code::after { content: var(--name-eng); } .eng .subject-details::after { content: var(--lehrer-eng); }
         
@@ -92,7 +119,7 @@
         
         .deu { background-color: var(--Deutsch); } .deu .subject-code::after { content: var(--name-deu); } .deu .subject-details::after { content: var(--lehrer-deu); }
         
-        .ita { background-color: var(--ITAG); } .ita .subject-code::after { content: var(--name-ita); } .ita .subject-details::after { content: var(--lehrer-ita); }
+        .itag { background-color: var(--ITAG); } .itag .subject-code::after { content: var(--name-itag); } .itag .subject-details::after { content: var(--lehrer-itag); }
         
         .che { background-color: var(--Chemie); } .che .subject-code::after { content: var(--name-che); } .che .subject-details::after { content: var(--lehrer-che); }
         
@@ -129,7 +156,7 @@
         <div class="hour-line" style="grid-row: 51;"></div><div class="hour-line" style="grid-row: 63;"></div>
         <div class="hour-line" style="grid-row: 75;"></div><div class="hour-line" style="grid-row: 87;"></div>  
         <!-- MONTAG -->
-        <div class="card mo inf" style="grid-row: 2 / span 9;">
+        <div class="card mo IT" style="grid-row: 2 / span 9;">
             <div class="card-top"><span class="subject-code"></span><span class="room-number">130</span></div>
             <div class="subject-details"></div><span class="time-badge start">7:55</span><span class="time-badge end">8:40</span>
         </div>
