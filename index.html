@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stundenplan</title>
+    <title>Digitaler Stundenplan</title>
     <style>
         :root {
             /* ============================================================
@@ -12,7 +12,7 @@
                KÜRZEL = das Wort, das du unten im Plan eintippst (klein, ohne Leerzeichen)
                ============================================================ */
             --fach-it:         "IT | Frau Heinrich | 224 | #ffc107";
-            --fach-englisch:   "Englisch | Frau Kramer | 106 | #FDBA74";
+            --fach-englisch:   "Englisch | Frau Kramer | 106 | #000000";
             --fach-geo:        "Geo | Frau Krone | 201 | #5d4037 | #fff";
             --fach-bio:        "Bio | Herr Pasurka | 214 | #4caf50";
             --fach-physik:     "Physik | Frau Hoffmann | 217 | #757575 | #fff";
@@ -59,6 +59,24 @@
         .free-zone small, .break-zone small { font-size: 0.68rem; font-weight: 500; opacity: .8; }
         .fehler { max-width: 1200px; margin: 0 auto 20px; padding: 10px 14px; border-radius: 8px; background: #FEE2E2; color: #991B1B; font-size: 0.9rem; }
         .fehler:empty { display: none; }
+
+        /* ---------- Handy / schmale Bildschirme ---------- */
+        .timetable-grid { --zeitcol: 90px; }
+        @media (max-width: 700px) {
+            body { padding: 16px 8px; }
+            .timetable-grid { --zeitcol: 40px; gap: 4px 5px; }
+            .day-header { font-size: 0.85rem; }
+            .time-label { font-size: 0.68rem; padding-right: 4px; }
+            .time-label .uhr { display: none; }
+            .card { padding: 4px 4px; border-radius: 6px; }
+            .card-top { flex-wrap: wrap; gap: 0 4px; }
+            .subject-code { font-size: 0.62rem; letter-spacing: 0; overflow-wrap: anywhere; hyphens: auto; -webkit-hyphens: auto; }
+            .room-number { font-size: 0.58rem; }
+            .subject-details { font-size: 0.55rem; }
+            .time-badge { display: none; }
+            .break-zone, .free-zone { font-size: 0.6rem; border-radius: 6px; }
+            .break-zone small, .free-zone small { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -190,7 +208,7 @@ Fr: Mathe Bio Pause Deutsch Englisch Pause Geo Chemie
         var grid = document.getElementById("grid");
         var endH = Math.ceil(maxEnd / 60);
         var rows = Math.round((endH * 60 - START) / 5) + 1;
-        grid.style.gridTemplateColumns = "90px repeat(" + tage.length + ", 1fr)";
+        grid.style.gridTemplateColumns = "var(--zeitcol) repeat(" + tage.length + ", minmax(0, 1fr))";
         grid.style.gridTemplateRows = "40px repeat(" + rows + ", 14px)";
 
         var zeit = el("day-header", "Zeit"); zeit.style.gridColumn = 1; grid.appendChild(zeit);
@@ -199,7 +217,7 @@ Fr: Mathe Bio Pause Deutsch Englisch Pause Geo Chemie
         });
         for (var h = Math.floor(START / 60) + (START % 60 ? 1 : 0); h <= endH; h++) {
             var row = 2 + Math.round((h * 60 - START) / 5);
-            var l = el("time-label", h + ":00 Uhr"); l.style.gridRow = row; grid.appendChild(l);
+            var l = el("time-label", h + ":00 "); l.appendChild(el("uhr", "Uhr", "span")); l.style.gridRow = row; grid.appendChild(l);
             var ln = el("hour-line"); ln.style.gridRow = row; grid.appendChild(ln);
         }
 
