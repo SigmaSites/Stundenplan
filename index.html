@@ -28,10 +28,18 @@
             --fach-musik:      "Musik | Herr Barkowsky | 001 | #ffffff";
             --fach-erstehilfe: "1. Hilfe | Frau Hinte | 214 | #2DD4BF";
 
+            /* ============================================================
+               ZEITEN – hier einstellbar
+               ============================================================ */
+            --start:  "7:55";     /* Beginn der 1. Stunde */
+            --stunde: 45;         /* Länge einer Stunde in Minuten */
+            --pausen: "20 15";    /* Länge der Pausen der Reihe nach (letzte Zahl gilt für alle weiteren) */
+            --frei:   45;         /* Länge einer Freistunde (Standard = eine Stunde) */
+
             --bg: #F8FAFC;
             --grid-line: #E2E8F0;
         }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); color: #1E293B; margin: 0; padding: 40px 20px; }
+        /*body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); color: #1E293B; margin: 0; padding: 40px 20px; }
         .timetable-grid { display: grid; gap: 6px 12px; max-width: 1200px; margin: 0 auto; position: relative; }
         .day-header { grid-row: 1; font-size: 1.1rem; font-weight: bold; text-align: center; align-self: center; color: #0F172A; }
         .time-label { grid-column: 1; color: #94A3B8; font-size: 0.9rem; text-align: right; padding-right: 15px; font-weight: 500; z-index: 10; }
@@ -44,10 +52,13 @@
         .time-badge { position: absolute; font-size: 0.68rem; font-weight: 600; opacity: 0.75; }
         .time-badge.start { top: 4px; right: 6px; }
         .time-badge.end { bottom: 4px; right: 6px; }
-        .break-zone { color: #94A3B8; font-size: 0.75rem; font-weight: 500; display: flex; align-items: center; justify-content: center; border-top: 1px solid var(--grid-line); border-bottom: 1px solid var(--grid-line); }
-        .free-zone { color: #94A3B8; font-size: 1rem; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 2; }
+        .break-zone, .free-zone { z-index: 6; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; line-height: 1.25; box-sizing: border-box; overflow: hidden;
+            background: repeating-linear-gradient(135deg, rgba(148,163,184,.14) 0 6px, transparent 6px 12px), var(--bg); }
+        .break-zone { color: #64748B; font-size: 0.75rem; font-weight: 500; border: 1px solid #CBD5E1; }
+        .free-zone { color: #64748B; font-size: 0.95rem; font-weight: 700; border: 2px dashed #CBD5E1; }
+        .free-zone small, .break-zone small { font-size: 0.68rem; font-weight: 500; opacity: .8; }
         .fehler { max-width: 1200px; margin: 0 auto 20px; padding: 10px 14px; border-radius: 8px; background: #FEE2E2; color: #991B1B; font-size: 0.9rem; }
-        .fehler:empty { display: none; }
+        .fehler:empty { display: none; }*/
     </style>
 </head>
 <body>
@@ -61,26 +72,34 @@
            Mathe Deutsch Pause Sport Sport Pause ...
 
          Regeln:
-           • Ein Fach = 45 Min. Zwei gleiche hintereinander = eine Doppelstunde.
-           • Pause  = 20 Min. (die erste am Tag), danach 15 Min.
-           • Frei   = Freistunde (30 Min.)
-           • Andere Länge:    Chemie:40   Pause:10   Frei:60
+           • Ein Fach = eine Stunde (Länge oben in :root bei --stunde).
+             Zwei gleiche hintereinander = eine Doppelstunde.
+           • Pause  = Länge aus --pausen (1. Pause, 2. Pause, ...)
+           • Frei   = Freistunde (Länge aus --frei, normalerweise eine Stunde)
+           • Andere Länge:    Chemie:40   Pause:10   Frei:30
            • Anderer Raum:    Physik/215   (Raum nur an diesem Tag)
            • Beides:          Physik/215:40
-           • Start ist 7:55 Uhr. Zeilen mit # davor werden ignoriert.
+           • Start-Uhrzeit steht oben in :root (--start). Zeilen mit # davor werden ignoriert.
          ================================================================ -->
     <script type="text/plain" id="plan">
-Mo: IT Englisch Pause Geo Bio Pause Physik Deutsch Frei ITAG ITAG
+Mo: IT Englisch Pause Geo Bio Pause Physik Deutsch Frei:30 ITAG ITAG
 Di: Chemie:40 Religion:40 Kls:30 Pause Geschichte:40 Physik/215:40 Pause Mathe:40 Mathe:40
 Mi: Englisch Englisch Pause Mathe Kunst Pause Geschichte Religion
-Do: Sport Sport Pause IT Musik Pause Deutsch Deutsch Frei Erstehilfe Erstehilfe
+Do: Sport Sport Pause IT Musik Pause Deutsch Deutsch Frei:30 Erstehilfe Erstehilfe
 Fr: Mathe Bio Pause Deutsch Englisch Pause Geo Chemie
     </script>
 
     <script>
     /* ---------- ab hier nichts ändern nötig ---------- */
     (function () {
-        var START = 7 * 60 + 55;                       // 7:55 Uhr
+        var rs = getComputedStyle(document.documentElement);
+        function cfg(name, def) { var v = rs.getPropertyValue(name).trim().replace(/^["']|["']$/g, ""); return v || def; }
+        var st = cfg("--start", "7:55").split(":");
+        var START = (parseInt(st[0], 10) || 7) * 60 + (parseInt(st[1], 10) || 0);
+        var STUNDE = parseInt(cfg("--stunde", "45"), 10) || 45;
+        var FREI = parseInt(cfg("--frei", "45"), 10) || STUNDE;
+        var PAUSEN = cfg("--pausen", "20 15").split(/[\s,]+/).map(Number).filter(function (n) { return n > 0; });
+        if (!PAUSEN.length) PAUSEN = [20, 15];
         var TAGE = ["mo", "di", "mi", "do", "fr", "sa"];
         var NAMEN = { mo: "Mo", di: "Di", mi: "Mi", "do": "Do", fr: "Fr", sa: "Sa" };
         var fehler = [];
@@ -133,7 +152,7 @@ Fr: Mathe Bio Pause Deutsch Englisch Pause Geo Chemie
         if (!tage.length) { document.getElementById("fehler").textContent = "Kein Plan gefunden – bitte Zeilen wie „Mo: Mathe Deutsch Pause“ eintragen."; return; }
 
         /* Zeiten berechnen */
-        var items = [], maxEnd = 13 * 60;
+        var items = [], maxEnd = START + 6 * 60;
         tage.forEach(function (t, ci) {
             var time = START, pausen = 0, last = null;
             plan[t].forEach(function (tok) {
@@ -143,16 +162,16 @@ Fr: Mathe Bio Pause Deutsch Englisch Pause Geo Chemie
                 var dur = parseInt(teile[1], 10) || 0;
 
                 if (key === "pause") {
-                    dur = dur || (pausen++ === 0 ? 20 : 15);
+                    dur = dur || PAUSEN[Math.min(pausen++, PAUSEN.length - 1)];
                     items.push({ ci: ci, kind: "pause", start: time, dur: dur });
                     time += dur; last = null; return;
                 }
                 if (key === "frei") {
-                    dur = dur || 30;
+                    dur = dur || FREI;
                     items.push({ ci: ci, kind: "frei", start: time, dur: dur });
                     time += dur; last = null; return;
                 }
-                dur = dur || 45;
+                dur = dur || STUNDE;
                 var f = faecher[key];
                 if (!f) fehler.push("Fach „" + key0 + "“ (" + NAMEN[t] + ") ist oben in :root nicht definiert (--fach-" + key + ").");
                 var raum = raumOv || (f ? f.raum : "");
@@ -178,7 +197,7 @@ Fr: Mathe Bio Pause Deutsch Englisch Pause Geo Chemie
         tage.forEach(function (t, ci) {
             var h = el("day-header", NAMEN[t]); h.style.gridColumn = ci + 2; grid.appendChild(h);
         });
-        for (var h = 8; h <= endH; h++) {
+        for (var h = Math.floor(START / 60) + (START % 60 ? 1 : 0); h <= endH; h++) {
             var row = 2 + Math.round((h * 60 - START) / 5);
             var l = el("time-label", h + ":00 Uhr"); l.style.gridRow = row; grid.appendChild(l);
             var ln = el("hour-line"); ln.style.gridRow = row; grid.appendChild(ln);
@@ -186,8 +205,16 @@ Fr: Mathe Bio Pause Deutsch Englisch Pause Geo Chemie
 
         items.forEach(function (it) {
             var e, row = 2 + Math.round((it.start - START) / 5), span = Math.max(1, Math.round(it.dur / 5));
-            if (it.kind === "pause") e = el("break-zone", it.dur + " min Pause");
-            else if (it.kind === "frei") e = el("free-zone", "Freistunde");
+            var zeitText = fmt(it.start) + "–" + fmt(it.start + it.dur);
+            if (it.kind === "pause") {
+                e = el("break-zone"); e.title = zeitText;
+                e.appendChild(el("", it.dur + " min Pause", "span"));
+                if (span >= 4) e.appendChild(el("", zeitText, "small"));
+            } else if (it.kind === "frei") {
+                e = el("free-zone"); e.title = zeitText;
+                e.appendChild(el("", "Freistunde", "span"));
+                if (span >= 4) e.appendChild(el("", zeitText, "small"));
+            }
             else {
                 e = el("card");
                 var f = it.f || { name: it.label, lehrer: "", farbe: "#E5E7EB", text: "" };
