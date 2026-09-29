@@ -5,288 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digitaler Stundenplan</title>
     <style>
-        /* ==========================================================================
-           ZENTRALE KONFIGURATION (:root)
-           Hier kannst du Farben, Fächer und Lehrer global anpassen!
-           ========================================================================== */
         :root {
-            /* Farben exakt nach deiner Vorlage */
-            --clr-inf: #FCD34D; /* Gelb */
-            --clr-eng: #9CA3AF; /* Grau */
-            --clr-geo: #A1887F; /* Braun */
-            --clr-bio: #86EFAC; /* Grün */
-            --clr-phy: #94A3B8; /* Schiefer */
-            --clr-deu: #F87171; /* Rot */
-            --clr-ita: #FBBF24; /* Dunkelgelb */
-            --clr-che: #E879F9; /* Pink/Lila */
-            --clr-rel: #C084FC; /* Violett */
-            --clr-kls: #CBD5E1; /* Hellgrau */
-            --clr-ges: #F472B6; /* Rosa */
-            --clr-mat: #6366F1; /* Blau-Violett */
-            --clr-kun: #60A5FA; /* Hellblau */
-            --clr-spo: #3B82F6; /* Blau */
-            --clr-mus: #E2E8F0; /* Ganz helles Grau */
-            --clr-ers: #2DD4BF; /* Türkis */
-            
-            --clr-bg: #F8FAFC;
-            --clr-grid-line: #E2E8F0;
+            /* Farben */
+            --clr-inf: #FCD34D; --clr-eng: #9CA3AF; --clr-geo: #A1887F;
+            --clr-bio: #86EFAC; --clr-phy: #94A3B8; --clr-deu: #F87171;
+            --clr-ita: #FBBF24; --clr-che: #E879F9; --clr-rel: #C084FC;
+            --clr-kls: #CBD5E1; --clr-ges: #F472B6; --clr-mat: #6366F1;
+            --clr-kun: #60A5FA; --clr-spo: #3B82F6; --clr-mus: #E2E8F0;
+            --clr-ers: #2DD4BF; --clr-bg: #F8FAFC; --clr-grid-line: #E2E8F0;
 
-            /* Vollständige Namen der Fächer */
-            --name-inf: "Informatik";
-            --name-eng: "Englisch";
-            --name-geo: "Geographie";
-            --name-bio: "Biologie";
-            --name-phy: "Physik";
-            --name-deu: "Deutsch";
-            --name-ita: "Italienisch";
-            --name-che: "Chemie";
-            --name-rel: "Religion";
-            --name-kls: "Klassenleiterst.";
-            --name-ges: "Geschichte";
-            --name-mat: "Mathematik";
-            --name-kun: "Kunst";
-            --name-spo: "Sport";
-            --name-mus: "Musik";
-            --name-ers: "Ethik / ERS";
+            /* Fach-Namen */
+            --name-inf: "Informatik"; --name-eng: "Englisch"; --name-geo: "Geographie";
+            --name-bio: "Biologie"; --name-phy: "Physik"; --name-deu: "Deutsch";
+            --name-ita: "Italienisch"; --name-che: "Chemie"; --name-rel: "Religion";
+            --name-kls: "Klassenleiterst."; --name-ges: "Geschichte"; --name-mat: "Mathematik";
+            --name-kun: "Kunst"; --name-spo: "Sport"; --name-mus: "Musik"; --name-ers: "Ethik / ERS";
 
-            /* Namen der Lehrer */
-            --lehrer-inf: "Hr. Müller";
-            --lehrer-eng: "Fr. Smith";
-            --lehrer-geo: "Hr. Mayer";
-            --lehrer-bio: "Fr. Grün";
-            --lehrer-phy: "Hr. Einstein";
-            --lehrer-deu: "Fr. Wort";
-            --lehrer-ita: "Signora B.";
-            --lehrer-che: "Hr. Bunsen";
-            --lehrer-rel: "Fr. Geist";
-            --lehrer-kls: "Hr. Chef";
-            --lehrer-ges: "Fr. Antike";
-            --lehrer-mat: "Hr. Pythagoras";
-            --lehrer-kun: "Fr. Picasso";
-            --lehrer-spo: "Hr. Fit";
-            --lehrer-mus: "Fr. Mozart";
-            --lehrer-ers: "Hr. Moral";
+            /* Lehrer */
+            --lehrer-inf: "Hr. Müller"; --lehrer-eng: "Fr. Smith"; --lehrer-geo: "Hr. Mayer";
+            --lehrer-bio: "Fr. Grün"; --lehrer-phy: "Hr. Einstein"; --lehrer-deu: "Fr. Wort";
+            --lehrer-ita: "Signora B."; --lehrer-che: "Hr. Bunsen"; --lehrer-rel: "Fr. Geist";
+            --lehrer-kls: "Hr. Chef"; --lehrer-ges: "Fr. Antike"; --lehrer-mat: "Hr. Pythagoras";
+            --lehrer-kun: "Fr. Picasso"; --lehrer-spo: "Hr. Fit"; --lehrer-mus: "Fr. Mozart"; --lehrer-ers: "Hr. Moral";
         }
-
-        /* Allgemeines Layout */
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: var(--clr-bg);
-            color: #1E293B;
-            margin: 0;
-            padding: 40px 20px;
-        }
-
-        .header {
-            max-width: 1200px;
-            margin: 0 auto 30px auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-icon {
-            background-color: #0284C7;
-            color: white;
-            font-weight: bold;
-            font-size: 1.8rem;
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-
-        .logo-text {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: #0F172A;
-            margin: 0;
-        }
-
-        .tagline {
-            font-size: 1.3rem;
-            font-style: italic;
-            color: #0284C7;
-            transform: rotate(-2deg);
-            font-family: 'Chalkboard SE', 'Comic Sans MS', sans-serif;
-        }
-
-        /* Das Hauptraster */
-        .timetable-grid {
-            display: grid;
-            grid-template-columns: 90px repeat(6, 1fr);
-            /* 85 Zeilen zu je 5 Minuten von 07:55 bis 15:00 Uhr */
-            grid-template-rows: 40px repeat(85, 14px);
-            gap: 6px 12px;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        /* Wochentage Kopfzeile */
-        .day-header {
-            grid-row: 1;
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-align: center;
-            align-self: center;
-            color: #0F172A;
-        }
-
-        /* Zeitachse links */
-        .time-label {
-            grid-column: 1;
-            color: #94A3B8;
-            font-size: 0.9rem;
-            text-align: right;
-            padding-right: 15px;
-            font-weight: 500;
-            z-index: 10;
-        }
-
-        /* Horizontale Stundenlinien im Hintergrund */
-        .hour-line {
-            grid-column: 1 / span 7;
-            border-top: 2px dashed var(--clr-grid-line);
-            z-index: 1;
-            pointer-events: none;
-            margin-top: 6px;
-        }
-
-        /* Styling der Fach-Karten */
-        .card {
-            border-radius: 8px;
-            padding: 8px 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            z-index: 5;
-        }
-
-        .card-top {
-            display: flex;
-            justify-content: flex-start;
-            align-items: baseline;
-            gap: 6px;
-        }
-
-        .subject-code {
-            font-size: 1.1rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        .room-number {
-            font-size: 0.8rem;
-            font-weight: 600;
-            opacity: 0.8;
-        }
-
-        .subject-details {
-            font-size: 0.8rem;
-            font-weight: 500;
-            margin-top: auto;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* Die kleinen exakten Zeiten in den Ecken */
-        .time-badge {
-            position: absolute;
-            font-size: 0.68rem;
-            font-weight: 600;
-            opacity: 0.75;
-        }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--clr-bg); color: #1E293B; margin: 0; padding: 40px 20px; }
+        .header { max-width: 1200px; margin: 0 auto 30px auto; display: flex; justify-content: space-between; align-items: flex-end; }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-icon { background-color: #0284C7; color: white; font-weight: bold; font-size: 1.8rem; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+        .logo-text { font-size: 2.2rem; font-weight: 800; color: #0F172A; margin: 0; }
+        .tagline { font-size: 1.3rem; font-style: italic; color: #0284C7; transform: rotate(-2deg); font-family: 'Comic Sans MS', sans-serif; }
+        .timetable-grid { display: grid; grid-template-columns: 90px repeat(6, 1fr); grid-template-rows: 40px repeat(85, 14px); gap: 6px 12px; max-width: 1200px; margin: 0 auto; position: relative; }
+        .day-header { grid-row: 1; font-size: 1.1rem; font-weight: bold; text-align: center; align-self: center; color: #0F172A; }
+        .time-label { grid-column: 1; color: #94A3B8; font-size: 0.9rem; text-align: right; padding-right: 15px; font-weight: 500; z-index: 10; }
+        .hour-line { grid-column: 1 / span 7; border-top: 2px dashed var(--clr-grid-line); z-index: 1; pointer-events: none; margin-top: 6px; }
+        .card { border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.02); z-index: 5; }
+        .card-top { display: flex; justify-content: flex-start; align-items: baseline; gap: 6px; }
+        .subject-code { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.5px; }
+        .room-number { font-size: 0.8rem; font-weight: 600; opacity: 0.8; }
+        .subject-details { font-size: 0.8rem; font-weight: 500; margin-top: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .time-badge { position: absolute; font-size: 0.68rem; font-weight: 600; opacity: 0.75; }
         .time-badge.start { top: 4px; right: 6px; }
         .time-badge.end { bottom: 4px; right: 6px; }
+        .break-zone { color: #94A3B8; font-size: 0.75rem; font-weight: 500; display: flex; align-items: center; justify-content: center; border-top: 1px solid var(--clr-grid-line); border-bottom: 1px solid var(--clr-grid-line); z-index: 2; }
+        .free-zone { color: #94A3B8; font-size: 1rem; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 2; }
+        .mo { grid-column: 2; } .di { grid-column: 3; } .mi { grid-column: 4; } .do { grid-column: 5; } .fr { grid-column: 6; } .sa { grid-column: 7; }
+        
+        .inf { background-color: var(--clr-inf); } .inf .subject-code::after { content: "INF"; } .inf .subject-details::after { content: var(--name-inf) " | " var(--lehrer-inf); }
+        .eng { background-color: var(--clr-eng); color: #1F2937; } .eng .subject-code::after { content: "ENG"; } .eng .subject-details::after { content: var(--name-eng) " | " var(--lehrer-eng); }
+        .geo { background-color: var(--clr-geo); color: #fff; } .geo .subject-code::after { content: "GEO"; } .geo .subject-details::after { content: var(--name-geo) " | " var(--lehrer-geo); }
+        .bio { background-color: var(--clr-bio); } .bio .subject-code::after { content: "BIO"; } .bio .subject-details::after { content: var(--name-bio) " | " var(--lehrer-bio); }
+        .phy { background-color: var(--clr-phy); color: #fff; } .phy .subject-code::after { content: "PHY"; } .phy .subject-details::after { content: var(--name-phy) " | " var(--lehrer-phy); }
+        .deu { background-color: var(--clr-deu); } .deu .subject-code::after { content: "DEU"; } .deu .subject-details::after { content: var(--name-deu) " | " var(--lehrer-deu); }
+        .ita { background-color: var(--clr-ita); } .ita .subject-code::after { content: "ITA"; } .ita .subject-details::after { content: var(--name-ita) " | " var(--lehrer-ita); }
+        .che { background-color: var(--clr-che); } .che .subject-code::after { content: "CHE"; } .che .subject-details::after { content: var(--name-che) " | " var(--lehrer-che); }
+        .rel { background-color: var(--clr-rel); color: #fff; } .rel .subject-code::after { content: "REL"; } .rel .subject-details::after { content: var(--name-rel) " | " var(--lehrer-rel); }
+        .kls { background-color: var(--clr-kls); } .kls .subject-code::after { content: "KLS"; } .kls .subject-details::after { content: var(--name-kls) " | " var(--lehrer-kls); }
+        .ges { background-color: var(--clr-ges); } .ges .subject-code::after { content: "GES"; } .ges .subject-details::after { content: var(--name-ges) " | " var(--lehrer-ges); }
+        .mat { background-color: var(--clr-mat); color: #fff; } .mat .subject-code::after { content: "MAT"; } .mat .subject-details::after { content: var(--name-mat) " | " var(--lehrer-mat); }
+        .kun { background-color: var(--clr-kun); } .kun .subject-code::after { content: "KUN"; } .kun .subject-details::after { content: var(--name-kun) " | " var(--lehrer-kun); }
+        .spo { background-color: var(--clr-spo); color: #fff; } .spo .subject-code::after { content: "SPO"; } .spo .subject-details::after { content: var(--name-spo) " | " var(--lehrer-spo); }
+        .mus { background-color: var(--clr-mus); } .mus .subject-code::after { content: "MUS"; } .mus .subject-details::after { content: var(--name-mus) " | " var(--lehrer-mus); }
+        .ers { background-color: var(--clr-ers); } .ers .subject-code::after { content: "ERS"; } .ers .subject-details::after { content: var(--name-ers) " | " var(--lehrer-ers); }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-area"><div class="logo-icon">n</div><h1 class="logo-text">Stundenplan<span>.</span></h1></div>
+        <div class="tagline">Auf Papier ganz nett. Digital aber besser!</div>
+    </div>
+    <div class="timetable-grid">
+        <div class="day-header" style="grid-column: 1;">Zeit</div>
+        <div class="day-header mo">Mo</div><div class="day-header di">Di</div><div class="day-header mi">Mi</div>
+        <div class="day-header do">Do</div><div class="day-header fr">Fr</div><div class="day-header sa">Sa</div>
 
-        /* Pausen & Freistunden */
-        .break-zone {
-            color: #94A3B8;
-            font-size: 0.75rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-top: 1px solid var(--clr-grid-line);
-            border-bottom: 1px solid var(--clr-grid-line);
-            z-index: 2;
-        }
+        <div class="time-label" style="grid-row: 3;">8:00 Uhr</div><div class="time-label" style="grid-row: 15;">9:00 Uhr</div>
+        <div class="time-label" style="grid-row: 27;">10:00 Uhr</div><div class="time-label" style="grid-row: 39;">11:00 Uhr</div>
+        <div class="time-label" style="grid-row: 51;">12:00 Uhr</div><div class="time-label" style="grid-row: 63;">13:00 Uhr</div>
+        <div class="time-label" style="grid-row: 75;">14:00 Uhr</div><div class="time-label" style="grid-row: 87;">15:00 Uhr</div>
 
-        .free-zone {
-            color: #94A3B8;
-            font-size: 1rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2;
-        }
-
-        /* Spaltenzuordnung */
-        .mo { grid-column: 2; } .di { grid-column: 3; } .mi { grid-column: 4; }
-        .do { grid-column: 5; } .fr { grid-column: 6; } .sa { grid-column: 7; }
-
-        /* Dynamische CSS-Injektion über root-Variablen */
-        .inf { background-color: var(--clr-inf); }
-        .inf .subject-code::after { content: "INF"; }
-        .inf .subject-details::after { content: var(--name-inf) " | " var(--lehrer-inf); }
-
-        .eng { background-color: var(--clr-eng); color: #1F2937; }
-        .eng .subject-code::after { content: "ENG"; }
-        .eng .subject-details::after { content: var(--name-eng) " | " var(--lehrer-eng); }
-
-        .geo { background-color: var(--clr-geo); color: #fff; }
-        .geo .subject-code::after { content: "GEO"; }
-        .geo .subject-details::after { content: var(--name-geo) " | " var(--lehrer-geo); }
-
-        .bio { background-color: var(--clr-bio); }
-        .bio .subject-code::after { content: "BIO"; }
-        .bio .subject-details::after { content: var(--name-bio) " | " var(--lehrer-bio); }
-
-        .phy { background-color: var(--clr-phy); color: #fff; }
-        .phy .subject-code::after { content: "PHY"; }
-        .phy .subject-details::after { content: var(--name-phy) " | " var(--lehrer-phy); }
-
-        .deu { background-color: var(--clr-deu); }
-        .deu .subject-code::after { content: "DEU"; }
-        .deu .subject-details::after { content: var(--name-deu) " | " var(--lehrer-deu); }
-
-        .ita { background-color: var(--clr-ita); }
-        .ita .subject-code::after { content: "ITA"; }
-        .ita .subject-details::after { content: var(--name-ita) " | " var(--lehrer-ita); }
-
-        .che { background-color: var(--clr-che); }
-        .che .subject-code::after { content: "CHE"; }
-        .che .subject-details::after { content: var(--name-che) " | " var(--lehrer-che); }
-
-        .rel { background-color: var(--clr-rel); color: #fff; }
-        .rel .subject-code::after { content: "REL"; }
-        .rel .subject-details::after { content: var(--name-rel) " | " var(--lehrer-rel); }
-
-        .kls { background-color: var(--clr-kls); }
-        .kls .subject-code::after { content: "KLS"; }
-        .kls .subject-details::after { content: var(--name-kls) " | " var(--lehrer-kls); }
-
-        .ges { background-color: var(--clr-ges); }
-        .ges .subject-code::after { content: "GES"; }
-        .ges .subject-details::after { content: var(--name-ges) " | " var(--lehrer-ges); }
-
-        .mat { background-color: var(--clr-mat); color: #fff; }
-        .mat .subject-code::after { content: "MAT"; }
-        .mat .subject-details::after { content: var(--name-mat) " | " var(--lehrer-mat); }
-
-        .kun { background-color: var(--clr-kun); }
-        .kun .subject-code::after { content: "KUN"; }
-        .kun .subject-details::after { content: var(--name-kun) " | " var(--lehrer-kun); }
+        <div class="hour-line" style="grid-row: 3;"></div><div class="hour-line" style="grid-row: 15;"></div>
+        <div class="hour-line" style="grid-row: 27;"></div><div class="hour-line" style="grid-row: 39;"></div>
+        <div class="hour-line" style="grid-row: 51;"></div><div class="hour-line" style="grid-row: 63;"></div>
+        <div class="hour-line" style="grid-row: 75;"></div><div class="hour-line" style="grid-row: 87;"></div>
