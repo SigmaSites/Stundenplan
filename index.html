@@ -57,13 +57,13 @@
             --lehrer-mus: "Herr Barkowsky"; 
             --lehrer-ers: "Frau Hinte";
         }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--clr-bg); color: #1E293B; margin: 0; padding: 40px 20px; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--Bg); color: #1E293B; margin: 0; padding: 40px 20px; }
         .header { max-width: 1200px; margin: 0 auto 30px auto; display: flex; justify-content: space-between; align-items: flex-end; }
         .tagline { font-size: 1.3rem; font-style: italic; color: #0284C7; transform: rotate(-2deg); font-family: 'Comic Sans MS', sans-serif; }
         .timetable-grid { display: grid; grid-template-columns: 90px repeat(6, 1fr); grid-template-rows: 40px repeat(85, 14px); gap: 6px 12px; max-width: 1200px; margin: 0 auto; position: relative; }
         .day-header { grid-row: 1; font-size: 1.1rem; font-weight: bold; text-align: center; align-self: center; color: #0F172A; }
         .time-label { grid-column: 1; color: #94A3B8; font-size: 0.9rem; text-align: right; padding-right: 15px; font-weight: 500; z-index: 10; }
-        .hour-line { grid-column: 1 / span 7; border-top: 2px dashed var(--clr-grid-line); z-index: 1; pointer-events: none; margin-top: 6px; }
+        .hour-line { grid-column: 1 / span 7; border-top: 2px dashed var(--grid-line); z-index: 1; pointer-events: none; margin-top: 6px; }
         .card { border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.02); z-index: 5; }
         .card-top { display: flex; justify-content: flex-start; align-items: baseline; gap: 6px; }
         .subject-code { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.5px; }
@@ -72,26 +72,26 @@
         .time-badge { position: absolute; font-size: 0.68rem; font-weight: 600; opacity: 0.75; }
         .time-badge.start { top: 4px; right: 6px; }
         .time-badge.end { bottom: 4px; right: 6px; }
-        .break-zone { color: #94A3B8; font-size: 0.75rem; font-weight: 500; display: flex; align-items: center; justify-content: center; border-top: 1px solid var(--clr-grid-line); border-bottom: 1px solid var(--clr-grid-line); z-index: 2; }
+        .break-zone { color: #94A3B8; font-size: 0.75rem; font-weight: 500; display: flex; align-items: center; justify-content: center; border-top: 1px solid var(--grid-line); border-bottom: 1px solid var(--grid-line); }
         .free-zone { color: #94A3B8; font-size: 1rem; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 2; }
         .mo { grid-column: 2; } .di { grid-column: 3; } .mi { grid-column: 4; } .do { grid-column: 5; } .fr { grid-column: 6; } .sa { grid-column: 7; }
         
-        .inf { background-color: var(--clr-inf); } .inf .subject-code::after { content: "INF"; } .inf .subject-details::after { content: var(--name-inf) " | " var(--lehrer-inf); }
-        .eng { background-color: var(--clr-eng); color: #1F2937; } .eng .subject-code::after { content: "ENG"; } .eng .subject-details::after { content: var(--name-eng) " | " var(--lehrer-eng); }
-        .geo { background-color: var(--clr-geo); color: #fff; } .geo .subject-code::after { content: "GEO"; } .geo .subject-details::after { content: var(--name-geo) " | " var(--lehrer-geo); }
-        .bio { background-color: var(--clr-bio); } .bio .subject-code::after { content: "BIO"; } .bio .subject-details::after { content: var(--name-bio) " | " var(--lehrer-bio); }
-        .phy { background-color: var(--clr-phy); color: #fff; } .phy .subject-code::after { content: "PHY"; } .phy .subject-details::after { content: var(--name-phy) " | " var(--lehrer-phy); }
-        .deu { background-color: var(--clr-deu); } .deu .subject-code::after { content: "DEU"; } .deu .subject-details::after { content: var(--name-deu) " | " var(--lehrer-deu); }
-        .ita { background-color: var(--clr-ita); } .ita .subject-code::after { content: "ITA"; } .ita .subject-details::after { content: var(--name-ita) " | " var(--lehrer-ita); }
-        .che { background-color: var(--clr-che); } .che .subject-code::after { content: "CHE"; } .che .subject-details::after { content: var(--name-che) " | " var(--lehrer-che); }
-        .rel { background-color: var(--clr-rel); color: #fff; } .rel .subject-code::after { content: "REL"; } .rel .subject-details::after { content: var(--name-rel) " | " var(--lehrer-rel); }
-        .kls { background-color: var(--clr-kls); } .kls .subject-code::after { content: "KLS"; } .kls .subject-details::after { content: var(--name-kls) " | " var(--lehrer-kls); }
-        .ges { background-color: var(--clr-ges); } .ges .subject-code::after { content: "GES"; } .ges .subject-details::after { content: var(--name-ges) " | " var(--lehrer-ges); }
-        .mat { background-color: var(--clr-mat); color: #fff; } .mat .subject-code::after { content: "MAT"; } .mat .subject-details::after { content: var(--name-mat) " | " var(--lehrer-mat); }
-        .kun { background-color: var(--clr-kun); } .kun .subject-code::after { content: "KUN"; } .kun .subject-details::after { content: var(--name-kun) " | " var(--lehrer-kun); }
-        .spo { background-color: var(--clr-spo); color: #fff; } .spo .subject-code::after { content: "SPO"; } .spo .subject-details::after { content: var(--name-spo) " | " var(--lehrer-spo); }
-        .mus { background-color: var(--clr-mus); } .mus .subject-code::after { content: "MUS"; } .mus .subject-details::after { content: var(--name-mus) " | " var(--lehrer-mus); }
-        .ers { background-color: var(--clr-ers); } .ers .subject-code::after { content: "ERS"; } .ers .subject-details::after { content: var(--name-ers) " | " var(--lehrer-ers); }
+        .inf { background-color: var(--IT); } .inf .subject-code::after { content: "INF"; } .inf .subject-details::after { content: var(--name-inf) " | " var(--lehrer-inf); }
+        .eng { background-color: var(--Englisch); color: #1F2937; } .eng .subject-code::after { content: "ENG"; } .eng .subject-details::after { content: var(--name-eng) " | " var(--lehrer-eng); }
+        .geo { background-color: var(--Geo); color: #fff; } .geo .subject-code::after { content: "GEO"; } .geo .subject-details::after { content: var(--name-geo) " | " var(--lehrer-geo); }
+        .bio { background-color: var(--Bio); } .bio .subject-code::after { content: "BIO"; } .bio .subject-details::after { content: var(--name-bio) " | " var(--lehrer-bio); }
+        .phy { background-color: var(--Physik); color: #fff; } .phy .subject-code::after { content: "PHY"; } .phy .subject-details::after { content: var(--name-phy) " | " var(--lehrer-phy); }
+        .deu { background-color: var(--Deutsch); } .deu .subject-code::after { content: "DEU"; } .deu .subject-details::after { content: var(--name-deu) " | " var(--lehrer-deu); }
+        .ita { background-color: var(--ITAG); } .ita .subject-code::after { content: "ITA"; } .ita .subject-details::after { content: var(--name-ita) " | " var(--lehrer-ita); }
+        .che { background-color: var(--Chemie); } .che .subject-code::after { content: "CHE"; } .che .subject-details::after { content: var(--name-che) " | " var(--lehrer-che); }
+        .rel { background-color: var(--Religion); color: #fff; } .rel .subject-code::after { content: "REL"; } .rel .subject-details::after { content: var(--name-rel) " | " var(--lehrer-rel); }
+        .kls { background-color: var(--Kls); } .kls .subject-code::after { content: "KLS"; } .kls .subject-details::after { content: var(--name-kls) " | " var(--lehrer-kls); }
+        .ges { background-color: var(--Geschichte); } .ges .subject-code::after { content: "GES"; } .ges .subject-details::after { content: var(--name-ges) " | " var(--lehrer-ges); }
+        .mat { background-color: var(--Mathe); color: #fff; } .mat .subject-code::after { content: "MAT"; } .mat .subject-details::after { content: var(--name-mat) " | " var(--lehrer-mat); }
+        .kun { background-color: var(--Kunst); } .kun .subject-code::after { content: "KUN"; } .kun .subject-details::after { content: var(--name-kun) " | " var(--lehrer-kun); }
+        .spo { background-color: var(--Sport); color: #fff; } .spo .subject-code::after { content: "SPO"; } .spo .subject-details::after { content: var(--name-spo) " | " var(--lehrer-spo); }
+        .mus { background-color: var(--Musik); } .mus .subject-code::after { content: "MUS"; } .mus .subject-details::after { content: var(--name-mus) " | " var(--lehrer-mus); }
+        .ers { background-color: var(--1. Hilfe); } .ers .subject-code::after { content: "ERS"; } .ers .subject-details::after { content: var(--name-ers) " | " var(--lehrer-ers); }
     </style>
 </head>
 <body>
