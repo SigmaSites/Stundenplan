@@ -9,7 +9,7 @@
             /* ============================================================
                FÄCHER – hier definieren (eine Zeile pro Fach)
                Format:  --fach-KÜRZEL: "Anzeigename | Lehrer | Raum | Farbe | Textfarbe (optional) | Randfarbe (optional)";
-               (Textfarbe leer lassen = automatisch, z. B.  "... | #ffffff | | #94A3B8"  für nur einen Rand)
+               (Textfarbe leer lassen = automatisch, z. B.  "... | #ffffff | | #000000"  für nur einen Rand)
                KÜRZEL = das Wort, das du unten im Plan eintippst (klein, ohne Leerzeichen)
                ============================================================ */
             --fach-it:         "IT | Frau Heinrich | 224 | #ffc107";
@@ -26,7 +26,7 @@
             --fach-mathe:      "Mathe | Frau Holzschuh | 228 | #1a237e";
             --fach-kunst:      "Kunst | Frau Sleeper | 023 | #1e88e5";
             --fach-sport:      "Sport | Herr Klüpfel | LKT-Halle | #ff5722";
-            --fach-musik:      "Musik | Herr Barkowsky | 001 | #ffffff | | #000000";
+            --fach-musik:      "Musik | Herr Barkowsky | 001 | #ffffff | | #94A3B8";
             --fach-erstehilfe: "1. Hilfe | Frau Hinte | 214 | #00ffda";
 
             /* ============================================================
@@ -58,6 +58,8 @@
         .break-zone { color: #64748B; font-size: 0.75rem; font-weight: 500; border: 1px solid #CBD5E1; }
         .free-zone { color: #64748B; font-size: 0.95rem; font-weight: 700; border: 2px dashed #CBD5E1; }
         .free-zone small, .break-zone small { font-size: 0.68rem; font-weight: 500; opacity: .8; }
+        .now-line { position: absolute; height: 2px; background: #3B82F6; z-index: 20; pointer-events: none; display: none; }
+        .now-line::before { content: ""; position: absolute; left: -3px; top: -4px; width: 10px; height: 10px; border-radius: 50%; background: #3B82F6; }
         .fehler { max-width: 1200px; margin: 0 auto 20px; padding: 10px 14px; border-radius: 8px; background: #FEE2E2; color: #991B1B; font-size: 0.9rem; }
         .fehler:empty { display: none; }
 
@@ -104,7 +106,7 @@
 Mo: IT Englisch Pause Geo Bio Pause Physik Deutsch Frei:30 ITAG ITAG
 Di: Chemie:40 Religion:40 Kls:30 Pause Geschichte:40 Physik/215:40 Pause Mathe:40 Mathe:40
 Mi: Englisch Englisch Pause Mathe Kunst Pause Geschichte Religion
-Do: Sport Sport Pause IT Musik Pause Deutsch Deutsch Frei:30 Erstehilfe Erstehilfe
+Do: Sport Sport Pause IT Musik Pause Deutsch Deutsch Frei:30 Erstehilfe Erstehilfe Erstehilfe
 Fr: Mathe Bio Pause Deutsch Englisch Pause Geo Chemie
     </script>
 
@@ -252,6 +254,25 @@ Fr: Mathe Bio Pause Deutsch Englisch Pause Geo Chemie
             e.style.gridRow = row + " / span " + span;
             grid.appendChild(e);
         });
+
+        /* Blaue "Jetzt"-Linie im heutigen Tag */
+        var jetzt = el("now-line");
+        grid.appendChild(jetzt);
+        function zeigeJetzt() {
+            var d = new Date();
+            var ci = tage.indexOf(["so", "mo", "di", "mi", "do", "fr", "sa"][d.getDay()]);
+            var m = d.getHours() * 60 + d.getMinutes() + d.getSeconds() / 60;
+            if (ci < 0 || m < START || m > endH * 60) { jetzt.style.display = "none"; return; }
+            var kopf = grid.querySelectorAll(".day-header")[ci + 1];
+            var gap = parseFloat(getComputedStyle(grid).rowGap) || 6;
+            jetzt.style.left = kopf.offsetLeft + "px";
+            jetzt.style.width = kopf.offsetWidth + "px";
+            jetzt.style.top = (40 + gap + (m - START) / 5 * (14 + gap) - 1) + "px";
+            jetzt.style.display = "block";
+        }
+        zeigeJetzt();
+        setInterval(zeigeJetzt, 30000);
+        window.addEventListener("resize", zeigeJetzt);
 
         document.getElementById("fehler").textContent = fehler.join(" ");
     })();
