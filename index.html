@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digitaler Stundenplan</title>
+    <title>Stundenplan</title>
     <style>
         :root {
             /* ============================================================
@@ -35,16 +35,16 @@
             --start:  "7:55";     /* Beginn der 1. Stunde */
             --stunde: 45;         /* Länge einer Stunde in Minuten */
             --pausen: "20 15";    /* Länge der Pausen der Reihe nach (letzte Zahl gilt für alle weiteren) */
-            --frei:   30;         /* Länge einer Freistunde (Standard = eine Stunde) */
+            --frei:   45;         /* Länge einer Freistunde (Standard = eine Stunde) */
 
             --bg: #F8FAFC;
             --grid-line: #E2E8F0;
         }
         body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); color: #1E293B; margin: 0; padding: 40px 20px; }
-        .timetable-grid { display: grid; gap: 6px 12px; max-width: 1200px; margin: 0 auto; position: relative; }
+        .timetable-grid { --rowgap: 6px; display: grid; gap: var(--rowgap) 12px; max-width: 1200px; margin: 0 auto; position: relative; }
         .day-header { grid-row: 1; font-size: 1.1rem; font-weight: bold; text-align: center; align-self: center; color: #0F172A; }
-        .time-label { grid-column: 1; color: #94A3B8; font-size: 0.9rem; text-align: right; padding-right: 15px; font-weight: 500; z-index: 10; }
-        .hour-line { grid-column: 1 / -1; border-top: 2px dashed var(--grid-line); z-index: 1; pointer-events: none; margin-top: 6px; }
+        .time-label { grid-column: 1; align-self: start; margin-top: calc(var(--rowgap) / -2); transform: translateY(-50%); white-space: nowrap; color: #94A3B8; font-size: 0.9rem; text-align: right; padding-right: 15px; font-weight: 500; z-index: 10; }
+        .hour-line { grid-column: 2 / -1; align-self: start; height: 0; border-top: 2px dashed var(--grid-line); z-index: 1; pointer-events: none; margin-top: calc(var(--rowgap) / -2 - 1px); }
         .card { border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.02); z-index: 5; color: #1E293B; overflow: hidden; }
         .card-top { display: flex; justify-content: flex-start; align-items: baseline; gap: 6px; }
         .subject-code { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.5px; }
@@ -67,7 +67,7 @@
         .timetable-grid { --zeitcol: 90px; }
         @media (max-width: 700px) {
             body { padding: 16px 8px; }
-            .timetable-grid { --zeitcol: 40px; gap: 4px 5px; }
+            .timetable-grid { --zeitcol: 40px; --rowgap: 4px; gap: var(--rowgap) 5px; }
             .day-header { font-size: 0.85rem; }
             .time-label { font-size: 0.68rem; padding-right: 4px; }
             .time-label .uhr { display: none; }
@@ -103,10 +103,10 @@
            • Start-Uhrzeit steht oben in :root (--start). Zeilen mit # davor werden ignoriert.
          ================================================================ -->
     <script type="text/plain" id="plan">
-Mo: IT Englisch Pause Geo Bio Pause Physik Deutsch Frei ITAG ITAG
+Mo: IT Englisch Pause Geo Bio Pause Physik Deutsch Frei:30 ITAG ITAG
 Di: Chemie:40 Religion:40 Kls:30 Pause Geschichte:40 Physik/215:40 Pause Mathe:40 Mathe:40
 Mi: Englisch Englisch Pause Mathe Kunst Pause Geschichte Religion
-Do: Sport Sport Pause IT Musik Pause Deutsch Deutsch Frei Erstehilfe Erstehilfe
+Do: Sport Sport Pause IT Musik Pause Deutsch Deutsch Frei:30 Erstehilfe Erstehilfe
 Fr: Mathe Bio Pause Deutsch Englisch Pause Geo Chemie
     </script>
 
@@ -267,7 +267,7 @@ Fr: Mathe Bio Pause Deutsch Englisch Pause Geo Chemie
             var gap = parseFloat(getComputedStyle(grid).rowGap) || 6;
             jetzt.style.left = kopf.offsetLeft + "px";
             jetzt.style.width = kopf.offsetWidth + "px";
-            jetzt.style.top = (40 + gap + (m - START) / 5 * (14 + gap) - 1) + "px";
+            jetzt.style.top = (40 + gap + (m - START) / 5 * (14 + gap) - gap / 2 - 1) + "px";
             jetzt.style.display = "block";
         }
         zeigeJetzt();
