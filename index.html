@@ -35,12 +35,12 @@
             --start:  "7:55";     /* Beginn der 1. Stunde */
             --stunde: 45;         /* Länge einer Stunde in Minuten */
             --pausen: "20 15";    /* Länge der Pausen der Reihe nach (letzte Zahl gilt für alle weiteren) */
-            --frei:   45;         /* Länge einer Freistunde (Standard = eine Stunde) */
+            --frei:   30;         /* Länge einer Freistunde (Standard = eine Stunde) */
 
             --bg: #F8FAFC;
             --grid-line: #E2E8F0;
         }
-        /*body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); color: #1E293B; margin: 0; padding: 40px 20px; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); color: #1E293B; margin: 0; padding: 40px 20px; }
         .timetable-grid { display: grid; gap: 6px 12px; max-width: 1200px; margin: 0 auto; position: relative; }
         .day-header { grid-row: 1; font-size: 1.1rem; font-weight: bold; text-align: center; align-self: center; color: #0F172A; }
         .time-label { grid-column: 1; color: #94A3B8; font-size: 0.9rem; text-align: right; padding-right: 15px; font-weight: 500; z-index: 10; }
@@ -64,7 +64,7 @@
         .fehler:empty { display: none; }
 
         /* ---------- Handy / schmale Bildschirme ---------- */
-        /*.timetable-grid { --zeitcol: 90px; }
+        .timetable-grid { --zeitcol: 90px; }
         @media (max-width: 700px) {
             body { padding: 16px 8px; }
             .timetable-grid { --zeitcol: 40px; gap: 4px 5px; }
@@ -78,7 +78,7 @@
             .subject-details { font-size: 0.55rem; }
             .time-badge { display: none; }
             .break-zone, .free-zone { font-size: 0.6rem; border-radius: 6px; }
-            .break-zone small, .free-zone small { display: none; }*/
+            .break-zone small, .free-zone small { display: none; }
         }
     </style>
 </head>
@@ -103,10 +103,10 @@
            • Start-Uhrzeit steht oben in :root (--start). Zeilen mit # davor werden ignoriert.
          ================================================================ -->
     <script type="text/plain" id="plan">
-Mo: IT Englisch Pause Geo Bio Pause Physik Deutsch Frei:30 ITAG ITAG
+Mo: IT Englisch Pause Geo Bio Pause Physik Deutsch Frei ITAG ITAG
 Di: Chemie:40 Religion:40 Kls:30 Pause Geschichte:40 Physik/215:40 Pause Mathe:40 Mathe:40
 Mi: Englisch Englisch Pause Mathe Kunst Pause Geschichte Religion
-Do: Sport Sport Pause IT Musik Pause Deutsch Deutsch Frei:30 Erstehilfe Erstehilfe
+Do: Sport Sport Pause IT Musik Pause Deutsch Deutsch Frei Erstehilfe Erstehilfe
 Fr: Mathe Bio Pause Deutsch Englisch Pause Geo Chemie
     </script>
 
