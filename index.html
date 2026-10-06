@@ -28,15 +28,14 @@
             --fach-sport:      "Sport | Herr Klüpfel | LKT-Halle | #ff5722";
             --fach-musik:      "Musik | Herr Barkowsky | 001 | #ffffff | | #94A3B8";
             --fach-erstehilfe: "1. Hilfe | Frau Hinte | 214 | #00ffda";
-            --fach-leer:       "Leer | N/A | N/A | #ffffff";
 
             /* ============================================================
                ZEITEN – hier einstellbar
                ============================================================ */
             --start:  "0:00";     /* Beginn der 1. Stunde */
             --stunde: 45;         /* Länge einer Stunde in Minuten */
-            --pausen: "20 15";    /* Länge der Pausen der Reihe nach (letzte Zahl gilt für alle weiteren) */
-            --frei:   45;         /* Länge einer Freistunde (Standard = eine Stunde) */
+            --pausen: "30 15";    /* Länge der Pausen der Reihe nach (letzte Zahl gilt für alle weiteren) */
+            --frei:   30;         /* Länge einer Freistunde (Standard = eine Stunde) */
 
             --bg: #F8FAFC;
             --grid-line: #E2E8F0;
@@ -104,11 +103,11 @@
            • Start-Uhrzeit steht oben in :root (--start). Zeilen mit # davor werden ignoriert.
          ================================================================ -->
     <script type="text/plain" id="plan">
-Mo: leer:465 IT Englisch Pause Geo Bio Pause Physik Deutsch Frei:30 ITAG ITAG leer:660
-Di: leer:465 Chemie:40 Religion:40 Kls:30 Pause Geschichte:40 Physik/215:40 Pause Mathe:40 Mathe:40 leer:660
-Mi: leer:465 Englisch Englisch Pause Mathe Kunst Pause Geschichte Religion leer:660
-Do: leer:465 Sport Sport Pause IT Musik Pause Deutsch Deutsch Frei:30 Erstehilfe Erstehilfe leer:660
-Fr: leer:465 Mathe Bio Pause Deutsch Englisch Pause Geo Chemie leer:660
+Mo: IT Englisch Pause Geo Bio Pause Physik Deutsch Frei ITAG ITAG
+Di: Chemie:40 Religion:40 Kls:30 Pause Geschichte:40 Physik/215:40 Pause Mathe:40 Mathe:40
+Mi: Englisch Englisch Pause Mathe Kunst Pause Geschichte Religion
+Do: Sport Sport Pause IT Musik Pause Deutsch Deutsch Frei Erstehilfe Erstehilfe
+Fr: Mathe Bio Pause Deutsch Englisch Pause Geo Chemie
     </script>
 
     <script>
